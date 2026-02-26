@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delivery Menu</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+body { font-family: Arial; padding: 20px; background:#f5f5f5; }
+h2 { text-align:center; }
+button {
+width:100%;
+padding:15px;
+margin:10px 0;
+font-size:16px;
+border:none;
+border-radius:10px;
+background:#2AABEE;
+color:white;
+}
+input {
+width:100%;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+border:1px solid #ccc;
+}
+</style>
+</head>
+<body>
+
+<h2>🍔 Меню доставки</h2>
+
+<button onclick="add('Бургер 25 R$')">Бургер — 25 R$</button>
+<button onclick="add('Пицца 60 R$')">Пицца — 60 R$</button>
+
+<h3>Адрес доставки</h3>
+<input id="address" placeholder="Введите адрес">
+
+<button onclick="sendOrder()">Оформить заказ</button>
+
+<script>
+let tg = window.Telegram.WebApp;
+tg.expand();
+
+let cart = [];
+
+function add(item){
+cart.push(item);
+alert(item + " добавлен");
+}
+
+function sendOrder(){
+let address = document.getElementById("address").value;
+let data = {
+order: cart,
+address: address
+};
+tg.sendData(JSON.stringify(data));
+}
+</script>
+
+</body>
+</html>
