@@ -3,60 +3,211 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delivery Menu</title>
+<title>Домашняя кухня</title>
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
 <style>
-body { font-family: Arial; padding: 20px; background:#f5f5f5; }
-h2 { text-align:center; }
-button {
-width:100%;
-padding:15px;
-margin:10px 0;
-font-size:16px;
-border:none;
-border-radius:10px;
-background:#2AABEE;
-color:white;
+body {
+font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+background: #f5f7fb;
+margin: 0;
+padding: 15px;
 }
-input {
-width:100%;
-padding:12px;
-margin:8px 0;
-border-radius:8px;
-border:1px solid #ccc;
+
+h1 {
+text-align: center;
+margin-bottom: 15px;
+}
+
+.category {
+margin-top: 25px;
+font-size: 18px;
+font-weight: 600;
+}
+
+.card {
+background: white;
+padding: 15px;
+margin-top: 10px;
+border-radius: 16px;
+box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+animation: fadeIn 0.3s ease;
+}
+
+select, input {
+width: 100%;
+padding: 10px;
+margin-top: 8px;
+border-radius: 10px;
+border: 1px solid #ddd;
+}
+
+button {
+width: 100%;
+margin-top: 10px;
+padding: 12px;
+border-radius: 12px;
+border: none;
+background: #2AABEE;
+color: white;
+font-size: 15px;
+font-weight: 500;
+transition: 0.2s;
+}
+
+button:hover {
+transform: scale(1.02);
+}
+
+.cart {
+margin-top: 30px;
+background: white;
+padding: 15px;
+border-radius: 16px;
+box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+}
+
+.remove {
+background: #ff4d4f;
+margin-top: 5px;
+}
+
+@keyframes fadeIn {
+from { opacity:0; transform: translateY(10px);}
+to { opacity:1; transform: translateY(0);}
 }
 </style>
 </head>
+
 <body>
 
-<h2>🍔 Меню доставки</h2>
+<h1>🥟 Домашняя кухня</h1>
+<div id="userInfo" style="font-size:14px;"></div>
 
-<button onclick="add('Бургер 25 R$')">Бургер — 25 R$</button>
-<button onclick="add('Пицца 60 R$')">Пицца — 60 R$</button>
+<!-- ПЕЛЬМЕНИ -->
+<div class="category">Пельмени</div>
+<div class="card">
+<select id="pelmeniType">
+<option value="Свинина и говядина|45">Свинина и говядина — 45 R$</option>
+<option value="Курица|40">Курица — 40 R$</option>
+<option value="Индейка|48">Индейка — 48 R$</option>
+</select>
+<input type="number" id="pelmeniQty" value="1" min="1">
+<button onclick="addItem('Пельмени','pelmeniType','pelmeniQty')">Добавить</button>
+</div>
 
-<h3>Адрес доставки</h3>
-<input id="address" placeholder="Введите адрес">
+<!-- ВАРЕНИКИ -->
+<div class="category">Вареники</div>
+<div class="card">
+<select id="varenikiType">
+<option value="Картошка|35">Картошка — 35 R$</option>
+<option value="Творог|38">Творог — 38 R$</option>
+<option value="Вишня|42">Вишня — 42 R$</option>
+</select>
+<input type="number" id="varenikiQty" value="1" min="1">
+<button onclick="addItem('Вареники','varenikiType','varenikiQty')">Добавить</button>
+</div>
+
+<!-- КОРЗИНА -->
+<div class="cart">
+<h3>🛒 Корзина</h3>
+<div id="cartItems"></div>
+<strong>Итого: <span id="total">0</span> R$</strong>
+
+<button onclick="requestPhone()">📱 Поделиться телефоном</button>
+<input id="phone" placeholder="Или введите номер вручную">
+<input id="address" placeholder="Адрес доставки">
 
 <button onclick="sendOrder()">Оформить заказ</button>
+</div>
 
 <script>
 let tg = window.Telegram.WebApp;
+let userData = {};
+if (tg) {
 tg.expand();
+userData = tg.initDataUnsafe?.user || {};
+document.getElementById("userInfo").innerHTML =
+"Вы вошли как: <b>" +
+(userData.first_name || "") +
+"</b> @" +
+(userData.username || "нет");
+}
 
 let cart = [];
+let total = 0;
 
-function add(item){
-cart.push(item);
-alert(item + " добавлен");
+function addItem(category, selectId, qtyId) {
+let select = document.getElementById(selectId);
+let qty = parseInt(document.getElementById(qtyId).value);
+let value = select.value.split("|");
+let name = value[0];
+let price = parseInt(value[1]);
+
+cart.push({category,name,price,qty});
+total += price * qty;
+
+updateCart();
+}
+
+function updateCart() {
+let div = document.getElementById("cartItems");
+div.innerHTML = "";
+total = 0;
+
+cart.forEach((item,index) => {
+let itemTotal = item.price * item.qty;
+total += itemTotal;
+
+div.innerHTML += `
+<div style="margin-bottom:8px;">
+${item.category} — ${item.name} x${item.qty} = ${itemTotal} R$
+<button class="remove" onclick="removeItem(${index})">Удалить</button>
+</div>
+`;
+});
+
+document.getElementById("total").innerText = total;
+}
+
+function removeItem(index) {
+cart.splice(index,1);
+updateCart();
+}
+
+function requestPhone(){
+if(tg){
+tg.requestContact();
+}
 }
 
 function sendOrder(){
+let phone = document.getElementById("phone").value;
 let address = document.getElementById("address").value;
-let data = {
-order: cart,
-address: address
+
+if(cart.length === 0){
+alert("Корзина пустая");
+return;
+}
+
+if(phone === "" || address === ""){
+alert("Заполните телефон и адрес");
+return;
+}
+
+let orderData = {
+user:{
+id:userData.id || "",
+name:userData.first_name || "",
+username:userData.username || ""
+},
+phone: phone,
+address: address,
+items: cart,
+total: total
 };
-tg.sendData(JSON.stringify(data));
+
+tg.sendData(JSON.stringify(orderData));
 }
 </script>
 
