@@ -200,9 +200,11 @@ ${itemsText}
 
 let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
 
-window.open(url, "_blank");
+// если запущено внутри Telegram
+if (tg && tg.openTelegramLink) {
+    tg.openTelegramLink(url);
+} else {
+    window.open(url, "_blank");
 }
-</script>
 
-</body>
-</html>
+}
