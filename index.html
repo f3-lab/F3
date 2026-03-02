@@ -31,15 +31,15 @@ padding: 15px;
 margin-top: 10px;
 border-radius: 16px;
 box-shadow: 0 6px 14px rgba(0,0,0,0.05);
-animation: fadeIn 0.3s ease;
 }
 
-select, input {
+select, input, textarea {
 width: 100%;
 padding: 10px;
 margin-top: 8px;
 border-radius: 10px;
 border: 1px solid #ddd;
+box-sizing: border-box;
 }
 
 button {
@@ -52,11 +52,6 @@ background: #2AABEE;
 color: white;
 font-size: 15px;
 font-weight: 500;
-transition: 0.2s;
-}
-
-button:hover {
-transform: scale(1.02);
 }
 
 .cart {
@@ -72,10 +67,6 @@ background: #ff4d4f;
 margin-top: 5px;
 }
 
-@keyframes fadeIn {
-from { opacity:0; transform: translateY(10px);}
-to { opacity:1; transform: translateY(0);}
-}
 </style>
 </head>
 
@@ -84,7 +75,6 @@ to { opacity:1; transform: translateY(0);}
 <h1>🥟 Домашняя кухня</h1>
 <div id="userInfo" style="font-size:14px;"></div>
 
-<!-- ПЕЛЬМЕНИ -->
 <div class="category">Пельмени</div>
 <div class="card">
 <select id="pelmeniType">
@@ -96,7 +86,6 @@ to { opacity:1; transform: translateY(0);}
 <button onclick="addItem('Пельмени','pelmeniType','pelmeniQty')">Добавить</button>
 </div>
 
-<!-- ВАРЕНИКИ -->
 <div class="category">Вареники</div>
 <div class="card">
 <select id="varenikiType">
@@ -108,14 +97,13 @@ to { opacity:1; transform: translateY(0);}
 <button onclick="addItem('Вареники','varenikiType','varenikiQty')">Добавить</button>
 </div>
 
-<!-- КОРЗИНА -->
 <div class="cart">
 <h3>🛒 Корзина</h3>
 <div id="cartItems"></div>
 <strong>Итого: <span id="total">0</span> R$</strong>
 
 <button onclick="requestPhone()">📱 Поделиться телефоном</button>
-<input id="phone" placeholder="Или введите номер вручную">
+<input id="phone" placeholder="Телефон">
 <input id="address" placeholder="Адрес доставки">
 
 <button onclick="sendOrder()">Оформить заказ</button>
@@ -124,6 +112,7 @@ to { opacity:1; transform: translateY(0);}
 <script>
 let tg = window.Telegram.WebApp;
 let userData = {};
+
 if (tg) {
 tg.expand();
 userData = tg.initDataUnsafe?.user || {};
@@ -145,8 +134,6 @@ let name = value[0];
 let price = parseInt(value[1]);
 
 cart.push({category,name,price,qty});
-total += price * qty;
-
 updateCart();
 }
 
@@ -182,6 +169,7 @@ tg.requestContact();
 }
 
 function sendOrder(){
+
 let phone = document.getElementById("phone").value;
 let address = document.getElementById("address").value;
 
@@ -195,19 +183,24 @@ alert("Заполните телефон и адрес");
 return;
 }
 
-let orderData = {
-user:{
-id:userData.id || "",
-name:userData.first_name || "",
-username:userData.username || ""
-},
-phone: phone,
-address: address,
-items: cart,
-total: total
-};
+let itemsText = "";
+cart.forEach(item => {
+itemsText += `${item.category} — ${item.name} x${item.qty} = ${item.price * item.qty} R$\n`;
+});
 
-tg.sendData(JSON.stringify(orderData));
+let text =
+`🥟 Новый заказ
+
+👤 ${userData.first_name || ""} @${userData.username || ""}
+📱 ${phone}
+📍 ${address}
+
+${itemsText}
+💰 Итого: ${total} R$`;
+
+let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
+
+window.open(url, "_blank");
 }
 </script>
 
