@@ -4,158 +4,102 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>F3 FOOD</title>
-
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-body{
-font-family: Arial, sans-serif;
-background:#f7f7f7;
-padding:15px;
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #111;
+    color: white;
 }
 
-h1{
-text-align:center;
+header {
+    padding: 20px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
 }
 
-.product{
-background:white;
-padding:10px;
-margin:10px 0;
-border-radius:10px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
+.menu {
+    padding: 15px;
 }
 
-button{
-background:#27ae60;
-color:white;
-border:none;
-padding:10px;
-border-radius:8px;
-width:100%;
-margin-top:5px;
-font-size:16px;
+.item {
+    background: #1e1e1e;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 12px;
 }
 
-input{
-width:100%;
-padding:10px;
-margin-top:10px;
-border-radius:8px;
-border:1px solid #ccc;
+.item h3 {
+    margin: 0 0 6px 0;
 }
 
-.cart{
-margin-top:20px;
-background:white;
-padding:10px;
-border-radius:10px;
+.price {
+    color: #00c853;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background: #ff6f00;
+    color: white;
+    font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<h1> 🌿F3FOOD</h1>
+<header>🥟 F3 FOOD — Замороженные блюда</header>
 
-<div class="product">
-<h3>Пельмени 1кг</h3>
-<p>100 R$</p>
-<button onclick="addToCart('Пельмени 1кг',100)">Добавить</button>
-</div>
-
-<div class="product">
-<h3>Вареники 1кг</h3>
-<p>90 R$</p>
-<button onclick="addToCart('Вареники 1кг',90)">Добавить</button>
-</div>
-
-<div class="cart">
-<h3>Корзина</h3>
-<div id="cart"></div>
-<p><strong>Итого: <span id="total">0</span> R$</strong></p>
-
-<input id="phone" placeholder="Телефон">
-<input id="address" placeholder="Адрес доставки">
-
-<button onclick="sendOrder()">Сделать заказ</button>
-</div>
+<div class="menu" id="menu"></div>
 
 <script>
 
-const tg = window.Telegram.WebApp;
-tg.expand();
+const products = [
+    {name: "Пельмени домашние", price: 35},
+    {name: "Вареники с картофелем", price: 30},
+    {name: "Вареники с вишней", price: 32},
+    {name: "Хинкали", price: 40},
+    {name: "Манты", price: 38},
+    {name: "Голубцы", price: 36},
+    {name: "Котлеты куриные", price: 34},
+    {name: "Фрикадельки говяжьи", price: 37},
+    {name: "Сырники", price: 28},
+    {name: "Блины с мясом", price: 33},
+    {name: "Чебуреки", price: 29}
+];
 
-let cart = [];
-let total = 0;
-let userData = tg.initDataUnsafe.user || {};
+const menu = document.getElementById("menu");
 
-function addToCart(name, price){
+products.forEach(product => {
+    const div = document.createElement("div");
+    div.className = "item";
 
-let existing = cart.find(item => item.name === name);
+    div.innerHTML = `
+        <h3>${product.name}</h3>
+        <div class="price">${product.price} R$ / кг</div>
+        <button onclick="order('${product.name}', ${product.price})">
+            Добавить в заказ
+        </button>
+    `;
 
-if(existing){
-existing.qty += 1;
-}else{
-cart.push({name, price, qty:1});
-}
-
-total += price;
-renderCart();
-}
-
-function renderCart(){
-
-let cartDiv = document.getElementById("cart");
-cartDiv.innerHTML = "";
-
-cart.forEach(item=>{
-cartDiv.innerHTML += `
-<p>${item.name} x${item.qty} = ${item.price * item.qty} R$</p>
-`;
+    menu.appendChild(div);
 });
 
-document.getElementById("total").innerText = total;
-}
-
-function sendOrder(){
-
-let phone = document.getElementById("phone").value;
-let address = document.getElementById("address").value;
-
-if(cart.length === 0){
-alert("Корзина пустая");
-return;
-}
-
-if(phone === "" || address === ""){
-alert("Заполните телефон и адрес");
-return;
-}
-
-let itemsText = "";
-cart.forEach(item => {
-itemsText += `${item.name} x${item.qty} = ${item.price * item.qty} R$\n`;
-});
-
-let text =
-`🥟 Новый заказ
-
-👤 ${userData.first_name || ""} @${userData.username || ""}
-📱 ${phone}
-📍 ${address}
-
-${itemsText}
-💰 Итого: ${total} R$`;
-
-let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
-
-if (tg && tg.openTelegramLink) {
-    tg.openTelegramLink(url);
-} else {
-    window.open(url, "_blank");
-}
-
+function order(name, price) {
+    const tg = window.Telegram.WebApp;
+    tg.sendData(JSON.stringify({
+        product: name,
+        price: price
+    }));
+    tg.close();
 }
 
 </script>
