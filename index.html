@@ -28,12 +28,14 @@ header {
 .item {
     background: #1e1e1e;
     padding: 15px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
     border-radius: 12px;
 }
 
-.item h3 {
-    margin: 0 0 6px 0;
+.item img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
 }
 
 .price {
@@ -42,7 +44,7 @@ header {
 }
 
 button {
-    margin-top: 10px;
+    margin-top: 8px;
     padding: 10px;
     width: 100%;
     border-radius: 8px;
@@ -50,6 +52,23 @@ button {
     background: #ff6f00;
     color: white;
     font-weight: bold;
+}
+
+.cart {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #1e1e1e;
+    padding: 15px;
+    border-top: 1px solid #333;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    border: none;
 }
 </style>
 </head>
@@ -60,21 +79,30 @@ button {
 
 <div class="menu" id="menu"></div>
 
+<div class="cart">
+    <div><strong>Корзина:</strong> <span id="cartCount">0</span> шт</div>
+    <div><strong>Сумма:</strong> <span id="total">0</span> R$</div>
+    <input type="text" id="name" placeholder="Ваше имя">
+    <input type="tel" id="phone" placeholder="Ваш телефон">
+    <button onclick="checkout()">Оформить заказ</button>
+</div>
+
 <script>
 
 const products = [
-    {name: "Пельмени домашние", price: 35},
-    {name: "Вареники с картофелем", price: 30},
-    {name: "Вареники с вишней", price: 32},
-    {name: "Хинкали", price: 40},
-    {name: "Манты", price: 38},
-    {name: "Голубцы", price: 36},
-    {name: "Котлеты куриные", price: 34},
-    {name: "Фрикадельки говяжьи", price: 37},
-    {name: "Сырники", price: 28},
-    {name: "Блины с мясом", price: 33},
-    {name: "Чебуреки", price: 29}
+    {name: "Пельмени домашние", price: 110, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f63"},
+    {name: "Вареники с картофелем", price: 105, img: "https://images.unsplash.com/photo-1617196039897-c9e84a6a4e3c"},
+    {name: "Хинкали", price: 120, img: "https://images.unsplash.com/photo-1625944525335-4734db9e8d9a"},
+    {name: "Манты", price: 118, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0"},
+    {name: "Голубцы", price: 112, img: "https://images.unsplash.com/photo-1617191517006-5a45fc3e39e4"},
+    {name: "Котлеты куриные", price: 100, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950"},
+    {name: "Сырники", price: 102, img: "https://images.unsplash.com/photo-1604908554023-1c1e2c1e3f52"},
+    {name: "Блины с мясом", price: 109, img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15"},
+    {name: "Чебуреки", price: 107, img: "https://images.unsplash.com/photo-1601050690117-64b9dce1c4f2"}
 ];
+
+let cart = [];
+let total = 0;
 
 const menu = document.getElementById("menu");
 
@@ -83,22 +111,43 @@ products.forEach(product => {
     div.className = "item";
 
     div.innerHTML = `
+        <img src="${product.img}" alt="${product.name}">
         <h3>${product.name}</h3>
         <div class="price">${product.price} R$ / кг</div>
-        <button onclick="order('${product.name}', ${product.price})">
-            Добавить в заказ
+        <button onclick="addToCart('${product.name}', ${product.price})">
+            Добавить в корзину
         </button>
     `;
 
     menu.appendChild(div);
 });
 
-function order(name, price) {
+function addToCart(name, price) {
+    cart.push({name, price});
+    total += price;
+    document.getElementById("cartCount").innerText = cart.length;
+    document.getElementById("total").innerText = total;
+}
+
+function checkout() {
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+
+    if (!name || !phone || cart.length === 0) {
+        alert("Заполните имя, телефон и добавьте товары");
+        return;
+    }
+
     const tg = window.Telegram.WebApp;
+
     tg.sendData(JSON.stringify({
-        product: name,
-        price: price
+        customer: name,
+        phone: phone,
+        items: cart,
+        total: total
     }));
+
     tg.close();
 }
 
