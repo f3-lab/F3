@@ -4,151 +4,158 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>F3 FOOD</title>
+
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    background: #111;
-    color: white;
+body{
+font-family: Arial, sans-serif;
+background:#f7f7f7;
+padding:15px;
 }
 
-header {
-    padding: 20px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: 600;
+h1{
+text-align:center;
 }
 
-.menu {
-    padding: 15px;
+.product{
+background:white;
+padding:10px;
+margin:10px 0;
+border-radius:10px;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
-.item {
-    background: #1e1e1e;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 12px;
+button{
+background:#27ae60;
+color:white;
+border:none;
+padding:10px;
+border-radius:8px;
+width:100%;
+margin-top:5px;
+font-size:16px;
 }
 
-.item img {
-    width: 100%;
-    border-radius: 10px;
-    margin-bottom: 10px;
+input{
+width:100%;
+padding:10px;
+margin-top:10px;
+border-radius:8px;
+border:1px solid #ccc;
 }
 
-.price {
-    color: #00c853;
-    font-weight: bold;
-}
-
-button {
-    margin-top: 8px;
-    padding: 10px;
-    width: 100%;
-    border-radius: 8px;
-    border: none;
-    background: #ff6f00;
-    color: white;
-    font-weight: bold;
-}
-
-.cart {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background: #1e1e1e;
-    padding: 15px;
-    border-top: 1px solid #333;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 8px;
-    border-radius: 8px;
-    border: none;
+.cart{
+margin-top:20px;
+background:white;
+padding:10px;
+border-radius:10px;
 }
 </style>
 </head>
 
 <body>
 
-<header>🥟 F3 FOOD — Замороженные блюда</header>
+<h1> 🌿F3 FOOD</h1>
 
-<div class="menu" id="menu"></div>
+<div class="product">
+<h3> Хололец с хреном и горчицей</h3>
+<p>100 R$</p>
+<button onclick="addToCart('Хололец с хреном и горчицей',100)">Добавить</button>
+</div>
+
+<div class="product">
+<h3>Вареники 1кг</h3>
+<p>90 R$</p>
+<button onclick="addToCart('Вареники 1кг',90)">Добавить</button>
+</div>
 
 <div class="cart">
-    <div><strong>Корзина:</strong> <span id="cartCount">0</span> шт</div>
-    <div><strong>Сумма:</strong> <span id="total">0</span> R$</div>
-    <input type="text" id="name" placeholder="Ваше имя">
-    <input type="tel" id="phone" placeholder="Ваш телефон">
-    <button onclick="checkout()">Оформить заказ</button>
+<h3>Корзина</h3>
+<div id="cart"></div>
+<p><strong>Итого: <span id="total">0</span> R$</strong></p>
+
+<input id="phone" placeholder="Телефон">
+<input id="address" placeholder="Адрес доставки">
+
+<button onclick="sendOrder()">Сделать заказ</button>
 </div>
 
 <script>
 
-const products = [
-    {name: "Пельмени домашние", price: 110, img: "https://images.unsplash.com/photo-1604908176997-125f25cc6f63"},
-    {name: "Вареники с картофелем", price: 105, img: "https://images.unsplash.com/photo-1617196039897-c9e84a6a4e3c"},
-    {name: "Хинкали", price: 120, img: "https://images.unsplash.com/photo-1625944525335-4734db9e8d9a"},
-    {name: "Манты", price: 118, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0"},
-    {name: "Голубцы", price: 112, img: "https://images.unsplash.com/photo-1617191517006-5a45fc3e39e4"},
-    {name: "Котлеты куриные", price: 100, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950"},
-    {name: "Сырники", price: 102, img: "https://images.unsplash.com/photo-1604908554023-1c1e2c1e3f52"},
-    {name: "Блины с мясом", price: 109, img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15"},
-    {name: "Чебуреки", price: 107, img: "https://images.unsplash.com/photo-1601050690117-64b9dce1c4f2"}
-];
+const tg = window.Telegram.WebApp;
+tg.expand();
 
 let cart = [];
 let total = 0;
+let userData = tg.initDataUnsafe.user || {};
 
-const menu = document.getElementById("menu");
+function addToCart(name, price){
 
-products.forEach(product => {
-    const div = document.createElement("div");
-    div.className = "item";
+let existing = cart.find(item => item.name === name);
 
-    div.innerHTML = `
-        <img src="${product.img}" alt="${product.name}">
-        <h3>${product.name}</h3>
-        <div class="price">${product.price} R$ / кг</div>
-        <button onclick="addToCart('${product.name}', ${product.price})">
-            Добавить в корзину
-        </button>
-    `;
-
-    menu.appendChild(div);
-});
-
-function addToCart(name, price) {
-    cart.push({name, price});
-    total += price;
-    document.getElementById("cartCount").innerText = cart.length;
-    document.getElementById("total").innerText = total;
+if(existing){
+existing.qty += 1;
+}else{
+cart.push({name, price, qty:1});
 }
 
-function checkout() {
+total += price;
+renderCart();
+}
 
-    const name = document.getElementById("name").value;
-    const phone = document.getElementById("phone").value;
+function renderCart(){
 
-    if (!name || !phone || cart.length === 0) {
-        alert("Заполните имя, телефон и добавьте товары");
-        return;
-    }
+let cartDiv = document.getElementById("cart");
+cartDiv.innerHTML = "";
 
-    const tg = window.Telegram.WebApp;
+cart.forEach(item=>{
+cartDiv.innerHTML += `
+<p>${item.name} x${item.qty} = ${item.price * item.qty} R$</p>
+`;
+});
 
-    tg.sendData(JSON.stringify({
-        customer: name,
-        phone: phone,
-        items: cart,
-        total: total
-    }));
+document.getElementById("total").innerText = total;
+}
 
-    tg.close();
+function sendOrder(){
+
+let phone = document.getElementById("phone").value;
+let address = document.getElementById("address").value;
+
+if(cart.length === 0){
+alert("Корзина пустая");
+return;
+}
+
+if(phone === "" || address === ""){
+alert("Заполните телефон и адрес");
+return;
+}
+
+let itemsText = "";
+cart.forEach(item => {
+itemsText += `${item.name} x${item.qty} = ${item.price * item.qty} R$\n`;
+});
+
+let text =
+`🥟 Новый заказ
+
+👤 ${userData.first_name || ""} @${userData.username || ""}
+📱 ${phone}
+📍 ${address}
+
+${itemsText}
+💰 Итого: ${total} R$`;
+
+let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
+
+if (tg && tg.openTelegramLink) {
+    tg.openTelegramLink(url);
+} else {
+    window.open(url, "_blank");
+}
+
 }
 
 </script>
