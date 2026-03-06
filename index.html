@@ -26,6 +26,12 @@ border-radius:10px;
 box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
+.product img{
+width:100%;
+border-radius:10px;
+margin-bottom:10px;
+}
+
 button{
 background:#27ae60;
 color:white;
@@ -56,29 +62,44 @@ border-radius:10px;
 
 <body>
 
-<h1> 🌿F3 FOOD</h1>
+<h1>🌿F3 FOOD</h1>
 
 <div class="product">
-<h3> Хололец с хреном и горчицей</h3>
+
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
+
+<h3>Холодец с хреном и горчицей</h3>
+
 <p>100 R$</p>
-<button onclick="addToCart('Хололец с хреном и горчицей',100)">Добавить</button>
+
+<button onclick="addToCart('Холодец с хреном и горчицей',100)">Добавить</button>
+
 </div>
 
 <div class="product">
+
 <h3>Вареники 1кг</h3>
+
 <p>90 R$</p>
+
 <button onclick="addToCart('Вареники 1кг',90)">Добавить</button>
+
 </div>
 
 <div class="cart">
+
 <h3>Корзина</h3>
+
 <div id="cart"></div>
+
 <p><strong>Итого: <span id="total">0</span> R$</strong></p>
 
 <input id="phone" placeholder="Телефон">
+
 <input id="address" placeholder="Адрес доставки">
 
 <button onclick="sendOrder()">Сделать заказ</button>
+
 </div>
 
 <script>
@@ -148,7 +169,7 @@ let text =
 ${itemsText}
 💰 Итого: ${total} R$`;
 
-let url = "https://t.me/F3FOOD?text=" + encodeURIComponent(text);
+let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
 
 if (tg && tg.openTelegramLink) {
     tg.openTelegramLink(url);
