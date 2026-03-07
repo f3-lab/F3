@@ -7,7 +7,10 @@
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+
 <style>
+
 body{
 font-family: Arial, sans-serif;
 background:#f7f7f7;
@@ -16,10 +19,12 @@ padding:15px;
 
 h1{
 text-align:center;
-font-size:36px;
+font-family:'Montserrat', sans-serif;
+font-size:34px;
 font-weight:900;
 color:#ff7a00;
 letter-spacing:2px;
+margin-bottom:20px;
 }
 
 .product{
@@ -67,12 +72,13 @@ background:white;
 padding:10px;
 border-radius:10px;
 }
+
 </style>
 </head>
 
 <body>
 
-<h1>🌿 F3 FOOD</h1>
+<h1>FLORIPA FAMILY FOOD</h1>
 
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
@@ -87,6 +93,7 @@ border-radius:10px;
 <button onclick="addToCart('Холодец с хреном и горчицей',100)">Добавить</button>
 </div>
 
+
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
 <h3>Буженина</h3>
@@ -99,6 +106,7 @@ border-radius:10px;
 <p>120 R$</p>
 <button onclick="addToCart('Буженина',120)">Добавить</button>
 </div>
+
 
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
@@ -113,6 +121,7 @@ border-radius:10px;
 <button onclick="addToCart('Лосось с/с',100)">Добавить</button>
 </div>
 
+
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
 <h3>Шашлык</h3>
@@ -126,16 +135,22 @@ border-radius:10px;
 <button onclick="addToCart('Шашлык',120)">Добавить</button>
 </div>
 
+
 <div class="cart">
+
 <h3>Корзина</h3>
+
 <div id="cart"></div>
+
 <p><strong>Итого: <span id="total">0</span> R$</strong></p>
 
 <input id="phone" placeholder="Телефон">
 <input id="address" placeholder="Адрес доставки">
 
 <button onclick="sendOrder()">Сделать заказ</button>
+
 </div>
+
 
 <script>
 
@@ -157,8 +172,10 @@ cart.push({name, price, qty:1});
 }
 
 total += price;
+
 renderCart();
 }
+
 
 function renderCart(){
 
@@ -172,7 +189,9 @@ cartDiv.innerHTML += `
 });
 
 document.getElementById("total").innerText = total;
+
 }
+
 
 function sendOrder(){
 
@@ -190,26 +209,32 @@ return;
 }
 
 let itemsText = "";
-cart.forEach(item => {
+
+cart.forEach(item=>{
 itemsText += `${item.name} x${item.qty} = ${item.price * item.qty} R$\n`;
 });
 
 let text =
+
 `🥟 Новый заказ
 
 👤 ${userData.first_name || ""} @${userData.username || ""}
+
 📱 ${phone}
+
 📍 ${address}
 
 ${itemsText}
+
 💰 Итого: ${total} R$`;
+
 
 let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
 
 if (tg && tg.openTelegramLink) {
-    tg.openTelegramLink(url);
+tg.openTelegramLink(url);
 } else {
-    window.open(url, "_blank");
+window.open(url, "_blank");
 }
 
 }
