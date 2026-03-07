@@ -68,7 +68,8 @@ cursor:pointer;
 }
 
 .sauce-button{
-background:#f39c12;
+background:#ff7a00;
+font-weight:700;
 }
 
 .mustard{
@@ -116,6 +117,7 @@ margin-top:10px;
 
 <img class="header-logo" src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8224.jpeg">
 
+
 <div class="product">
 
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
@@ -131,8 +133,8 @@ margin-top:10px;
 
 <button onclick="addToCart('Холодец',100)">Добавить</button>
 
-<button class="sauce-button" onclick="toggleSauces('sauce1')">
-Соусы
+<button id="btn1" class="sauce-button" onclick="toggleSauces('sauce1','btn1')">
+🌶 Соусы ▼
 </button>
 
 <div class="sauces" id="sauce1">
@@ -144,6 +146,7 @@ margin-top:10px;
 </div>
 
 </div>
+
 
 
 <div class="product">
@@ -161,8 +164,8 @@ margin-top:10px;
 
 <button onclick="addToCart('Буженина',120)">Добавить</button>
 
-<button class="sauce-button" onclick="toggleSauces('sauce2')">
-Соусы
+<button id="btn2" class="sauce-button" onclick="toggleSauces('sauce2','btn2')">
+🌶 Соусы ▼
 </button>
 
 <div class="sauces" id="sauce2">
@@ -174,6 +177,7 @@ margin-top:10px;
 </div>
 
 </div>
+
 
 
 <div class="product">
@@ -194,6 +198,7 @@ margin-top:10px;
 </div>
 
 
+
 <div class="product">
 
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
@@ -209,8 +214,8 @@ margin-top:10px;
 
 <button onclick="addToCart('Шашлык',120)">Добавить</button>
 
-<button class="sauce-button" onclick="toggleSauces('sauce3')">
-Соусы
+<button id="btn3" class="sauce-button" onclick="toggleSauces('sauce3','btn3')">
+🌶 Соусы ▼
 </button>
 
 <div class="sauces" id="sauce3">
@@ -224,6 +229,7 @@ margin-top:10px;
 </div>
 
 
+
 <div class="cart">
 
 <h3>Корзина</h3>
@@ -235,12 +241,12 @@ margin-top:10px;
 </p>
 
 <input id="phone" placeholder="Телефон">
-
 <input id="address" placeholder="Адрес доставки">
 
 <button onclick="sendOrder()">Сделать заказ</button>
 
 </div>
+
 
 
 <script>
@@ -253,14 +259,21 @@ let total=0;
 
 let userData = tg.initDataUnsafe.user || {};
 
-function toggleSauces(id){
+function toggleSauces(id,btn){
 
 let block=document.getElementById(id);
+let button=document.getElementById(btn);
 
 if(block.style.display==="block"){
+
 block.style.display="none";
+button.innerHTML="🌶 Соусы ▼";
+
 }else{
+
 block.style.display="block";
+button.innerHTML="🌶 Соусы ▲";
+
 }
 
 }
@@ -288,10 +301,7 @@ let cartDiv=document.getElementById("cart");
 cartDiv.innerHTML="";
 
 cart.forEach(item=>{
-
-cartDiv.innerHTML+=
-"<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
-
+cartDiv.innerHTML+="<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
 });
 
 document.getElementById("total").innerText=total;
