@@ -28,8 +28,8 @@ margin-bottom:18px;
 
 .product{
 background:white;
-padding:12px;
-margin:12px 0;
+padding:14px;
+margin:14px 0;
 border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.08);
 }
@@ -41,7 +41,7 @@ margin-bottom:10px;
 }
 
 .product h3{
-margin:5px 0;
+margin:6px 0;
 }
 
 .description{
@@ -52,7 +52,7 @@ margin-bottom:6px;
 
 .price{
 font-weight:700;
-margin-bottom:6px;
+margin-bottom:8px;
 }
 
 button{
@@ -67,18 +67,22 @@ font-size:16px;
 cursor:pointer;
 }
 
-button:hover{
-opacity:0.9;
+.sauce-button{
+background:#34495e;
 }
 
-.topping{
+.mustard{
 background:#f1c40f;
 color:black;
 }
 
 .adjika{
 background:#e74c3c;
-color:white;
+}
+
+.sauces{
+display:none;
+margin-top:8px;
 }
 
 input{
@@ -96,10 +100,6 @@ background:white;
 padding:15px;
 border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.08);
-}
-
-.cart p{
-margin:6px 0;
 }
 
 .total{
@@ -130,13 +130,19 @@ margin-top:10px;
 
 <p class="price">100 R$</p>
 
-<button onclick="addToCart('Холодец',100)">
-Добавить холодец
+<button onclick="addToCart('Холодец',100)">Добавить</button>
+
+<button class="sauce-button" onclick="toggleSauces('sauce1')">
+Соусы
 </button>
 
-<button class="topping" onclick="addToCart('Русская горчица',15)">
-+ Русская горчица 15 R$
+<div class="sauces" id="sauce1">
+
+<button class="mustard" onclick="addToCart('Русская горчица',15)">
+Русская горчица +15 R$
 </button>
+
+</div>
 
 </div>
 
@@ -155,13 +161,19 @@ margin-top:10px;
 
 <p class="price">120 R$</p>
 
-<button onclick="addToCart('Буженина',120)">
-Добавить
+<button onclick="addToCart('Буженина',120)">Добавить</button>
+
+<button class="sauce-button" onclick="toggleSauces('sauce2')">
+Соусы
 </button>
 
-<button class="topping" onclick="addToCart('Русская горчица',15)">
-+ Русская горчица 15 R$
+<div class="sauces" id="sauce2">
+
+<button class="mustard" onclick="addToCart('Русская горчица',15)">
+Русская горчица +15 R$
 </button>
+
+</div>
 
 </div>
 
@@ -180,9 +192,7 @@ margin-top:10px;
 
 <p class="price">100 R$</p>
 
-<button onclick="addToCart('Лосось с/с',100)">
-Добавить
-</button>
+<button onclick="addToCart('Лосось с/с',100)">Добавить</button>
 
 </div>
 
@@ -201,13 +211,19 @@ margin-top:10px;
 
 <p class="price">120 R$</p>
 
-<button onclick="addToCart('Шашлык',120)">
-Добавить
+<button onclick="addToCart('Шашлык',120)">Добавить</button>
+
+<button class="sauce-button" onclick="toggleSauces('sauce3')">
+Соусы
 </button>
 
+<div class="sauces" id="sauce3">
+
 <button class="adjika" onclick="addToCart('Аджика',15)">
-+ Аджика 15 R$
+Аджика +15 R$
 </button>
+
+</div>
 
 </div>
 
@@ -227,9 +243,7 @@ margin-top:10px;
 
 <input id="address" placeholder="Адрес доставки">
 
-<button onclick="sendOrder()">
-Сделать заказ
-</button>
+<button onclick="sendOrder()">Сделать заказ</button>
 
 </div>
 
@@ -245,9 +259,21 @@ let total=0;
 
 let userData = tg.initDataUnsafe.user || {};
 
+function toggleSauces(id){
+
+let block=document.getElementById(id);
+
+if(block.style.display==="block"){
+block.style.display="none";
+}else{
+block.style.display="block";
+}
+
+}
+
 function addToCart(name,price){
 
-let existing = cart.find(item=>item.name===name);
+let existing=cart.find(item=>item.name===name);
 
 if(existing){
 existing.qty+=1;
@@ -281,7 +307,6 @@ document.getElementById("total").innerText=total;
 function sendOrder(){
 
 let phone=document.getElementById("phone").value;
-
 let address=document.getElementById("address").value;
 
 if(cart.length===0){
@@ -297,12 +322,11 @@ return;
 let itemsText="";
 
 cart.forEach(item=>{
-
 itemsText+=item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$\n";
-
 });
 
-let text="🥟 Новый заказ\n\n"+
+let text=
+"🥟 Новый заказ\n\n"+
 "👤 "+(userData.first_name||"")+" @"+(userData.username||"")+"\n\n"+
 "📱 "+phone+"\n\n"+
 "📍 "+address+"\n\n"+
