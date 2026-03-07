@@ -192,18 +192,6 @@ font-size:16px;
 
 <button onclick="addToCart('Холодец',100)">Добавить</button>
 
-<button id="btn1" class="sauce-button" onclick="toggleSauces('s1','btn1')">
-🌶 Соусы ▼
-</button>
-
-<div class="sauces" id="s1">
-
-<button class="mustard" onclick="addToCart('Русская горчица',15)">
-Русская горчица +15 R$
-</button>
-
-</div>
-
 </div>
 
 
@@ -220,18 +208,6 @@ font-size:16px;
 <p class="price">120 R$</p>
 
 <button onclick="addToCart('Буженина',120)">Добавить</button>
-
-<button id="btn2" class="sauce-button" onclick="toggleSauces('s2','btn2')">
-🌶 Соусы ▼
-</button>
-
-<div class="sauces" id="s2">
-
-<button class="mustard" onclick="addToCart('Русская горчица',15)">
-Русская горчица +15 R$
-</button>
-
-</div>
 
 </div>
 
@@ -267,18 +243,6 @@ font-size:16px;
 
 <button onclick="addToCart('Шашлык',120)">Добавить</button>
 
-<button id="btn3" class="sauce-button" onclick="toggleSauces('s3','btn3')">
-🌶 Соусы ▼
-</button>
-
-<div class="sauces" id="s3">
-
-<button class="adjika" onclick="addToCart('Аджика',15)">
-Аджика +15 R$
-</button>
-
-</div>
-
 </div>
 
 </div>
@@ -289,7 +253,7 @@ font-size:16px;
 
 <div class="product">
 
-<img src="https://raw.githubusercontent.com/f3-lab/F3/main/4B546A5A-6CF8-4677-9CAA-A63CDDDCF026.jpeg">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Canape.jpg">
 
 <h3>Канапе</h3>
 
@@ -298,50 +262,14 @@ font-size:16px;
 </p>
 
 <div class="canape">
-
 <button onclick="addToCart('Канапе тост буженина / корнишон',120)">Тост буженина / корнишон</button>
-
 <button onclick="addToCart('Канапе тост креветка / черри',120)">Тост креветка / черри</button>
-
 <button onclick="addToCart('Канапе тост лосось / оливка',120)">Тост лосось / оливка</button>
-
 <button onclick="addToCart('Канапе тост кальмар / свежий огурец',120)">Тост кальмар / св. огурец</button>
-
 <button onclick="addToCart('Канапе тост сыровяленое мясо',120)">Тост сыровяленое мясо</button>
-
 <button onclick="addToCart('Канапе тост моцарелла / черри',120)">Тост моцарелла / черри</button>
-
 <button onclick="addToCart('Канапе тост ростбиф / корнишон',120)">Тост ростбиф / корнишон</button>
-
-<button onclick="addToCart('Канапе тост сыр бри / клубника',120)">Тост сыр бри / клубника</button>
-
-</div>
-
-</div>
-
-
-<div class="product">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Bruschetta_al_pomodoro.jpg">
-
-<h3>Брускетта</h3>
-
-<p class="description">
-Выберите варианты
-</p>
-
-<div class="canape">
-
-<button onclick="addToCart('Брускетта томаты / базилик',120)">Томаты / базилик</button>
-
-<button onclick="addToCart('Брускетта лосось / крем сыр',120)">Лосось / крем сыр</button>
-
-<button onclick="addToCart('Брускетта ростбиф / соус',120)">Ростбиф / соус</button>
-
-<button onclick="addToCart('Брускетта креветка / авокадо',120)">Креветка / авокадо</button>
-
-<button onclick="addToCart('Брускетта моцарелла / томаты',120)">Моцарелла / томаты</button>
-
+<button onclick="addToCart('Канапе тост бри / клубника',120)">Тост сыр бри / клубника</button>
 </div>
 
 </div>
@@ -367,8 +295,154 @@ font-size:16px;
 
 </div>
 
+
+
 <script>
-/* весь JS остался без изменений */
+
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+let cart=[];
+let userData = tg.initDataUnsafe.user || {};
+
+function switchMenu(menu,btn){
+
+document.querySelectorAll('.menu').forEach(m=>{
+m.classList.remove('active');
+});
+
+document.getElementById(menu).classList.add('active');
+
+document.querySelectorAll('.tab').forEach(t=>{
+t.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+}
+
+function addToCart(name,price){
+
+let existing=cart.find(i=>i.name===name);
+
+if(existing){
+existing.qty+=1;
+}else{
+cart.push({name,price,qty:1});
+}
+
+renderCart();
+
+}
+
+function updateTotal(){
+
+let total=0;
+
+cart.forEach(i=>{
+total+=i.price*i.qty;
+});
+
+document.getElementById("total").innerText=total;
+
+return total;
+
+}
+
+function renderCart(){
+
+let cartDiv=document.getElementById("cart");
+cartDiv.innerHTML="";
+
+cart.forEach((item,index)=>{
+
+cartDiv.innerHTML+=`
+
+<div class="cart-item">
+
+<div>
+${item.name} x${item.qty} = ${item.price*item.qty} R$
+</div>
+
+<div class="cart-controls">
+<button onclick="decreaseItem(${index})">➖</button>
+<button onclick="increaseItem(${index})">➕</button>
+<button onclick="removeItem(${index})">❌</button>
+</div>
+
+</div>
+
+`;
+
+});
+
+updateTotal();
+
+}
+
+function increaseItem(i){
+cart[i].qty++;
+renderCart();
+}
+
+function decreaseItem(i){
+
+cart[i].qty--;
+
+if(cart[i].qty<=0){
+cart.splice(i,1);
+}
+
+renderCart();
+
+}
+
+function removeItem(i){
+cart.splice(i,1);
+renderCart();
+}
+
+function sendOrder(){
+
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+
+if(cart.length===0){
+alert("Корзина пустая");
+return;
+}
+
+if(phone===""||address===""){
+alert("Введите телефон и адрес");
+return;
+}
+
+let items="";
+let total=0;
+
+cart.forEach(i=>{
+items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
+total+=i.price*i.qty;
+});
+
+let text=
+"🥟 Новый заказ\n\n"+
+"👤 "+(userData.first_name||"")+" @"+(userData.username||"")+"\n\n"+
+"📱 "+phone+"\n\n"+
+"📍 "+address+"\n\n"+
+items+
+"\n💰 Итого: "+total+" R$";
+
+let url="https://t.me/kirillvist?text="+encodeURIComponent(text);
+
+if(tg && tg.openTelegramLink){
+tg.openTelegramLink(url);
+}else{
+window.open(url,"_blank");
+}
+
+}
+
 </script>
 
 </body>
