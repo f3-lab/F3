@@ -28,8 +28,8 @@ margin-bottom:18px;
 
 .product{
 background:white;
-padding:12px;
-margin:12px 0;
+padding:14px;
+margin:14px 0;
 border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.08);
 }
@@ -41,7 +41,7 @@ margin-bottom:10px;
 }
 
 .product h3{
-margin:5px 0;
+margin:6px 0;
 }
 
 .description{
@@ -52,7 +52,15 @@ margin-bottom:6px;
 
 .price{
 font-weight:700;
-margin-bottom:6px;
+margin-bottom:8px;
+}
+
+.topping-option{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:14px;
+margin-bottom:8px;
 }
 
 button{
@@ -67,16 +75,7 @@ font-size:16px;
 cursor:pointer;
 }
 
-button:hover{
-opacity:0.9;
-}
-
-.topping{
-background:#f1c40f;
-color:black;
-}
-
-input{
+input[type="text"]{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -93,10 +92,6 @@ border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.08);
 }
 
-.cart p{
-margin:6px 0;
-}
-
 .total{
 font-size:18px;
 font-weight:700;
@@ -111,6 +106,7 @@ margin-top:10px;
 
 <img class="header-logo" src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8224.jpeg">
 
+
 <div class="product">
 
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
@@ -124,15 +120,18 @@ margin-top:10px;
 
 <p class="price">100 R$</p>
 
-<button onclick="addToCart('Холодец',100)">
-Добавить холодец
-</button>
+<label class="topping-option">
+<input type="checkbox" id="mustard-kholodets">
+Русская горчица +15 R$
+</label>
 
-<button class="topping" onclick="addToCart('Русская горчица (к холодцу)',15)">
-+ Русская горчица 15 R$
+<button onclick="addProduct('Холодец',100,'mustard-kholodets')">
+Добавить
 </button>
 
 </div>
+
+
 
 <div class="product">
 
@@ -147,15 +146,18 @@ margin-top:10px;
 
 <p class="price">120 R$</p>
 
-<button onclick="addToCart('Буженина',120)">
+<label class="topping-option">
+<input type="checkbox" id="mustard-buzhenina">
+Русская горчица +15 R$
+</label>
+
+<button onclick="addProduct('Буженина',120,'mustard-buzhenina')">
 Добавить
 </button>
 
-<button class="topping" onclick="addToCart('Русская горчица (к буженине)',15)">
-+ Русская горчица 15 R$
-</button>
-
 </div>
+
+
 
 <div class="product">
 
@@ -170,11 +172,13 @@ margin-top:10px;
 
 <p class="price">100 R$</p>
 
-<button onclick="addToCart('Лосось с/с',100)">
+<button onclick="addProduct('Лосось с/с',100,null)">
 Добавить
 </button>
 
 </div>
+
+
 
 <div class="product">
 
@@ -189,11 +193,13 @@ margin-top:10px;
 
 <p class="price">120 R$</p>
 
-<button onclick="addToCart('Шашлык',120)">
+<button onclick="addProduct('Шашлык',120,null)">
 Добавить
 </button>
 
 </div>
+
+
 
 <div class="cart">
 
@@ -205,35 +211,50 @@ margin-top:10px;
 Итого: <span id="total">0</span> R$
 </p>
 
-<input id="phone" placeholder="Телефон">
+<input id="phone" type="text" placeholder="Телефон">
 
-<input id="address" placeholder="Адрес доставки">
+<input id="address" type="text" placeholder="Адрес доставки">
 
-<button onclick="sendOrder()">
-Сделать заказ
-</button>
+<button onclick="sendOrder()">Сделать заказ</button>
 
 </div>
+
+
 
 <script>
 
 const tg = window.Telegram.WebApp;
 tg.expand();
 
-let cart = [];
-let total = 0;
+let cart=[];
+let total=0;
 
 let userData = tg.initDataUnsafe.user || {};
 
-function addToCart(name,price){
+function addProduct(name,basePrice,toppingId){
 
-let existing = cart.find(item=>item.name===name);
+let price=basePrice;
+let toppingText="";
 
-if(existing){
-existing.qty+=1;
-}else{
-cart.push({name,price,qty:1});
+if(toppingId){
+
+let topping=document.getElementById(toppingId);
+
+if(topping.checked){
+
+price+=15;
+toppingText=" + Русская горчица";
+
+topping.checked=false;
+
 }
+
+}
+
+cart.push({
+name:name+toppingText,
+price:price
+});
 
 total+=price;
 
@@ -241,16 +262,17 @@ renderCart();
 
 }
 
+
+
 function renderCart(){
 
 let cartDiv=document.getElementById("cart");
-
 cartDiv.innerHTML="";
 
 cart.forEach(item=>{
 
 cartDiv.innerHTML+=
-"<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
+"<p>"+item.name+" — "+item.price+" R$</p>";
 
 });
 
@@ -258,10 +280,11 @@ document.getElementById("total").innerText=total;
 
 }
 
+
+
 function sendOrder(){
 
 let phone=document.getElementById("phone").value;
-
 let address=document.getElementById("address").value;
 
 if(cart.length===0){
@@ -277,12 +300,11 @@ return;
 let itemsText="";
 
 cart.forEach(item=>{
-
-itemsText+=item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$\n";
-
+itemsText+=item.name+" — "+item.price+" R$\n";
 });
 
-let text="🥟 Новый заказ\n\n"+
+let text=
+"🥟 Новый заказ\n\n"+
 "👤 "+(userData.first_name||"")+" @"+(userData.username||"")+"\n\n"+
 "📱 "+phone+"\n\n"+
 "📍 "+address+"\n\n"+
@@ -291,7 +313,7 @@ itemsText+
 
 let url="https://t.me/kirillvist?text="+encodeURIComponent(text);
 
-if(tg&&tg.openTelegramLink){
+if(tg && tg.openTelegramLink){
 tg.openTelegramLink(url);
 }else{
 window.open(url,"_blank");
