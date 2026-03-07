@@ -17,14 +17,10 @@ background:#f7f7f7;
 padding:15px;
 }
 
-h1{
-text-align:center;
-font-family:'Montserrat', sans-serif;
-font-size:34px;
-font-weight:900;
-color:#ff7a00;
-letter-spacing:2px;
-margin-bottom:20px;
+.header-logo{
+width:100%;
+border-radius:12px;
+margin-bottom:15px;
 }
 
 .product{
@@ -78,7 +74,7 @@ border-radius:10px;
 
 <body>
 
-<h1>FLORIPA FAMILY FOOD</h1>
+<img class="header-logo" src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8224.jpeg">
 
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
@@ -93,7 +89,6 @@ border-radius:10px;
 <button onclick="addToCart('Холодец с хреном и горчицей',100)">Добавить</button>
 </div>
 
-
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
 <h3>Буженина</h3>
@@ -106,7 +101,6 @@ border-radius:10px;
 <p>120 R$</p>
 <button onclick="addToCart('Буженина',120)">Добавить</button>
 </div>
-
 
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
@@ -121,7 +115,6 @@ border-radius:10px;
 <button onclick="addToCart('Лосось с/с',100)">Добавить</button>
 </div>
 
-
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
 <h3>Шашлык</h3>
@@ -134,7 +127,6 @@ border-radius:10px;
 <p>120 R$</p>
 <button onclick="addToCart('Шашлык',120)">Добавить</button>
 </div>
-
 
 <div class="cart">
 
@@ -150,7 +142,6 @@ border-radius:10px;
 <button onclick="sendOrder()">Сделать заказ</button>
 
 </div>
-
 
 <script>
 
@@ -176,7 +167,6 @@ total += price;
 renderCart();
 }
 
-
 function renderCart(){
 
 let cartDiv = document.getElementById("cart");
@@ -191,7 +181,6 @@ cartDiv.innerHTML += `
 document.getElementById("total").innerText = total;
 
 }
-
 
 function sendOrder(){
 
@@ -227,7 +216,6 @@ let text =
 ${itemsText}
 
 💰 Итого: ${total} R$`;
-
 
 let url = "https://t.me/kirillvist?text=" + encodeURIComponent(text);
 
