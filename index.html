@@ -1,174 +1,301 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Floripa Family Food</title>
+<title>FLORIPA FAMILY FOOD</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;900&display=swap" rel="stylesheet">
 
 <style>
 
 body{
-margin:0;
-font-family:'Montserrat',sans-serif;
+font-family:'Montserrat',Arial,sans-serif;
 background:#f7f7f7;
-color:#222;
+padding:15px;
+margin:0;
 }
 
-.header{
-background:white;
-padding:20px;
-text-align:center;
-box-shadow:0 2px 8px rgba(0,0,0,0.05);
-}
-
-.header img{
-max-width:220px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
-
-.menu-title{
-font-size:28px;
-font-weight:700;
-margin-bottom:20px;
-}
-
-.card{
-background:white;
-border-radius:16px;
-overflow:hidden;
-margin-bottom:24px;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-transition:0.2s;
-}
-
-.card:hover{
-transform:translateY(-4px);
-}
-
-.food-img{
+.header-logo{
 width:100%;
-height:260px;
-object-fit:cover;
+border-radius:14px;
+margin-bottom:18px;
 }
 
-.card-body{
-padding:18px;
+.product{
+background:white;
+padding:12px;
+margin:12px 0;
+border-radius:12px;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
 }
 
-.food-name{
-font-size:22px;
-font-weight:600;
+.product img{
+width:100%;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+.product h3{
+margin:5px 0;
+}
+
+.description{
+font-size:14px;
+color:#555;
 margin-bottom:6px;
 }
 
-.food-desc{
-font-size:14px;
-color:#666;
-margin-bottom:12px;
+.price{
+font-weight:700;
+margin-bottom:6px;
 }
 
-.price{
-font-size:20px;
-font-weight:700;
+button{
+background:#27ae60;
+color:white;
+border:none;
+padding:12px;
+border-radius:10px;
+width:100%;
+margin-top:6px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
 }
 
 .topping{
-margin-top:10px;
-font-size:14px;
-background:#f1f1f1;
-padding:8px 10px;
-border-radius:8px;
-display:inline-block;
+background:#f1c40f;
+color:black;
 }
 
-.footer{
-text-align:center;
-margin-top:30px;
-font-size:13px;
-color:#888;
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+.cart{
+margin-top:25px;
+background:white;
+padding:15px;
+border-radius:12px;
+box-shadow:0 3px 8px rgba(0,0,0,0.08);
+}
+
+.cart p{
+margin:6px 0;
+}
+
+.total{
+font-size:18px;
+font-weight:700;
+margin-top:10px;
 }
 
 </style>
+
 </head>
 
 <body>
 
-<div class="header">
-<img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8224.jpeg">
-</div>
+<img class="header-logo" src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8224.jpeg">
 
-<div class="container">
+<div class="product">
 
-<div class="menu-title">
-Меню
-</div>
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
 
+<h3>Холодец</h3>
 
-<div class="card">
+<p class="description">
+Состав: говядина, свинина, курица<br>
+Вес: 400 г
+</p>
 
-<img class="food-img" src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
+<p class="price">100 R$</p>
 
-<div class="card-body">
+<button onclick="addToCart('Холодец',100)">
+Добавить холодец
+</button>
 
-<div class="food-name">
-Шашлык
-</div>
-
-<div class="food-desc">
-Свинина 200 г
-</div>
-
-<div class="price">
-120 R$
-</div>
+<button class="topping" onclick="addToCart('Русская горчица (топинг)',15)">
++ Русская горчица 15 R$
+</button>
 
 </div>
 
-</div>
+<div class="product">
 
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
 
+<h3>Буженина</h3>
 
-<div class="card">
+<p class="description">
+Состав: свинина<br>
+Вес: 200 г
+</p>
 
-<img class="food-img" src="https://raw.githubusercontent.com/f3-lab/F3/main/kholodets.jpg">
+<p class="price">120 R$</p>
 
-<div class="card-body">
-
-<div class="food-name">
-Холодец
-</div>
-
-<div class="food-desc">
-Традиционный домашний холодец
-</div>
-
-<div class="price">
-90 R$
-</div>
-
-<div class="topping">
-Топинг: Русская горчица +15 R$
-</div>
+<button onclick="addToCart('Буженина',120)">
+Добавить
+</button>
 
 </div>
 
+<div class="product">
+
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
+
+<h3>Лосось с/с</h3>
+
+<p class="description">
+Состав: слабосолёный лосось<br>
+Вес: 120 г
+</p>
+
+<p class="price">100 R$</p>
+
+<button onclick="addToCart('Лосось с/с',100)">
+Добавить
+</button>
+
 </div>
 
+<div class="product">
 
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
 
-<div class="footer">
-Floripa Family Food
+<h3>Шашлык</h3>
+
+<p class="description">
+Состав: свинина<br>
+Вес: 200 г
+</p>
+
+<p class="price">120 R$</p>
+
+<button onclick="addToCart('Шашлык',120)">
+Добавить
+</button>
+
 </div>
 
+<div class="cart">
+
+<h3>Корзина</h3>
+
+<div id="cart"></div>
+
+<p class="total">
+Итого: <span id="total">0</span> R$
+</p>
+
+<input id="phone" placeholder="Телефон">
+
+<input id="address" placeholder="Адрес доставки">
+
+<button onclick="sendOrder()">
+Сделать заказ
+</button>
+
 </div>
+
+<script>
+
+const tg = window.Telegram.WebApp;
+tg.expand();
+
+let cart = [];
+let total = 0;
+
+let userData = tg.initDataUnsafe.user || {};
+
+function addToCart(name,price){
+
+let existing = cart.find(item=>item.name===name);
+
+if(existing){
+existing.qty+=1;
+}else{
+cart.push({name,price,qty:1});
+}
+
+total+=price;
+
+renderCart();
+
+}
+
+function renderCart(){
+
+let cartDiv=document.getElementById("cart");
+
+cartDiv.innerHTML="";
+
+cart.forEach(item=>{
+
+cartDiv.innerHTML+=
+"<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
+
+});
+
+document.getElementById("total").innerText=total;
+
+}
+
+function sendOrder(){
+
+let phone=document.getElementById("phone").value;
+
+let address=document.getElementById("address").value;
+
+if(cart.length===0){
+alert("Корзина пустая");
+return;
+}
+
+if(phone===""||address===""){
+alert("Введите телефон и адрес");
+return;
+}
+
+let itemsText="";
+
+cart.forEach(item=>{
+
+itemsText+=item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$\n";
+
+});
+
+let text="🥟 Новый заказ\n\n"+
+"👤 "+(userData.first_name||"")+" @"+(userData.username||"")+"\n\n"+
+"📱 "+phone+"\n\n"+
+"📍 "+address+"\n\n"+
+itemsText+
+"\n💰 Итого: "+total+" R$";
+
+let url="https://t.me/kirillvist?text="+encodeURIComponent(text);
+
+if(tg&&tg.openTelegramLink){
+tg.openTelegramLink(url);
+}else{
+window.open(url,"_blank");
+}
+
+}
+
+</script>
 
 </body>
 </html>
