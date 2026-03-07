@@ -192,6 +192,18 @@ font-size:16px;
 
 <button onclick="addToCart('Холодец',100)">Добавить</button>
 
+<button id="btn1" class="sauce-button" onclick="toggleSauces('s1','btn1')">
+🌶 Соусы ▼
+</button>
+
+<div class="sauces" id="s1">
+
+<button class="mustard" onclick="addToCart('Русская горчица',15)">
+Русская горчица +15 R$
+</button>
+
+</div>
+
 </div>
 
 
@@ -208,6 +220,18 @@ font-size:16px;
 <p class="price">120 R$</p>
 
 <button onclick="addToCart('Буженина',120)">Добавить</button>
+
+<button id="btn2" class="sauce-button" onclick="toggleSauces('s2','btn2')">
+🌶 Соусы ▼
+</button>
+
+<div class="sauces" id="s2">
+
+<button class="mustard" onclick="addToCart('Русская горчица',15)">
+Русская горчица +15 R$
+</button>
+
+</div>
 
 </div>
 
@@ -243,6 +267,18 @@ font-size:16px;
 
 <button onclick="addToCart('Шашлык',120)">Добавить</button>
 
+<button id="btn3" class="sauce-button" onclick="toggleSauces('s3','btn3')">
+🌶 Соусы ▼
+</button>
+
+<div class="sauces" id="s3">
+
+<button class="adjika" onclick="addToCart('Аджика',15)">
+Аджика +15 R$
+</button>
+
+</div>
+
 </div>
 
 </div>
@@ -253,7 +289,7 @@ font-size:16px;
 
 <div class="product">
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Canape.jpg">
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/4B546A5A-6CF8-4677-9CAA-A63CDDDCF026.jpeg">
 
 <h3>Канапе</h3>
 
@@ -262,14 +298,23 @@ font-size:16px;
 </p>
 
 <div class="canape">
+
 <button onclick="addToCart('Канапе тост буженина / корнишон',120)">Тост буженина / корнишон</button>
+
 <button onclick="addToCart('Канапе тост креветка / черри',120)">Тост креветка / черри</button>
+
 <button onclick="addToCart('Канапе тост лосось / оливка',120)">Тост лосось / оливка</button>
+
 <button onclick="addToCart('Канапе тост кальмар / свежий огурец',120)">Тост кальмар / св. огурец</button>
+
 <button onclick="addToCart('Канапе тост сыровяленое мясо',120)">Тост сыровяленое мясо</button>
+
 <button onclick="addToCart('Канапе тост моцарелла / черри',120)">Тост моцарелла / черри</button>
+
 <button onclick="addToCart('Канапе тост ростбиф / корнишон',120)">Тост ростбиф / корнишон</button>
-<button onclick="addToCart('Канапе тост бри / клубника',120)">Тост сыр бри / клубника</button>
+
+<button onclick="addToCart('Канапе тост сыр бри / клубника',120)">Тост сыр бри / клубника</button>
+
 </div>
 
 </div>
@@ -318,6 +363,21 @@ t.classList.remove('active');
 });
 
 btn.classList.add('active');
+
+}
+
+function toggleSauces(id,btn){
+
+let block=document.getElementById(id);
+let button=document.getElementById(btn);
+
+if(block.style.display==="block"){
+block.style.display="none";
+button.innerHTML="🌶 Соусы ▼";
+}else{
+block.style.display="block";
+button.innerHTML="🌶 Соусы ▲";
+}
 
 }
 
