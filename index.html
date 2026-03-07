@@ -76,6 +76,11 @@ background:#f1c40f;
 color:black;
 }
 
+.adjika{
+background:#e74c3c;
+color:white;
+}
+
 input{
 width:100%;
 padding:12px;
@@ -200,6 +205,10 @@ margin-top:10px;
 Добавить
 </button>
 
+<button class="adjika" onclick="addToCart('Аджика',15)">
++ Аджика 15 R$
+</button>
+
 </div>
 
 
@@ -293,7 +302,7 @@ itemsText+=item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$\n";
 
 });
 
-let text="Новый заказ\n\n"+
+let text="🥟 Новый заказ\n\n"+
 "👤 "+(userData.first_name||"")+" @"+(userData.username||"")+"\n\n"+
 "📱 "+phone+"\n\n"+
 "📍 "+address+"\n\n"+
