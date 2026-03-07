@@ -26,8 +26,6 @@ border-radius:14px;
 margin-bottom:18px;
 }
 
-/* вкладки */
-
 .tabs{
 display:flex;
 gap:10px;
@@ -48,8 +46,6 @@ cursor:pointer;
 background:#ff7a00;
 color:white;
 }
-
-/* карточки */
 
 .product{
 background:white;
@@ -115,8 +111,6 @@ display:none;
 display:block;
 }
 
-/* корзина */
-
 .cart{
 margin-top:25px;
 background:white;
@@ -129,6 +123,21 @@ box-shadow:0 3px 8px rgba(0,0,0,0.08);
 font-size:18px;
 font-weight:700;
 margin-top:10px;
+}
+
+.cart-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:8px;
+font-size:14px;
+}
+
+.cart-controls button{
+width:auto;
+padding:6px 10px;
+margin-left:4px;
+font-size:14px;
 }
 
 input{
@@ -160,8 +169,6 @@ font-size:16px;
 
 </div>
 
-
-<!-- ДОМАШНЕЕ МЕНЮ -->
 
 <div id="home" class="menu active">
 
@@ -230,7 +237,7 @@ font-size:16px;
 <h3>Лосось с/с</h3>
 
 <p class="description">
-Лосось слабосоленный • 120 г
+Лосось слабосоленый • 120 г
 </p>
 
 <p class="price">100 R$</p>
@@ -272,8 +279,6 @@ font-size:16px;
 
 
 
-<!-- ФУРШЕТНОЕ МЕНЮ -->
-
 <div id="buffet" class="menu">
 
 <div class="product">
@@ -297,8 +302,6 @@ font-size:16px;
 </div>
 
 
-
-<!-- КОРЗИНА -->
 
 <div class="cart">
 
@@ -325,7 +328,6 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 let cart=[];
-let total=0;
 let userData = tg.initDataUnsafe.user || {};
 
 function switchMenu(menu,btn){
@@ -369,24 +371,78 @@ existing.qty+=1;
 cart.push({name,price,qty:1});
 }
 
-total+=price;
-
 renderCart();
+
+}
+
+function updateTotal(){
+
+let total=0;
+
+cart.forEach(i=>{
+total+=i.price*i.qty;
+});
+
+document.getElementById("total").innerText=total;
+
+return total;
 
 }
 
 function renderCart(){
 
 let cartDiv=document.getElementById("cart");
-
 cartDiv.innerHTML="";
 
-cart.forEach(item=>{
-cartDiv.innerHTML+=
-"<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
+cart.forEach((item,index)=>{
+
+cartDiv.innerHTML+=`
+
+<div class="cart-item">
+
+<div>
+${item.name} x${item.qty} = ${item.price*item.qty} R$
+</div>
+
+<div class="cart-controls">
+<button onclick="decreaseItem(${index})">➖</button>
+<button onclick="increaseItem(${index})">➕</button>
+<button onclick="removeItem(${index})">❌</button>
+</div>
+
+</div>
+
+`;
+
 });
 
-document.getElementById("total").innerText=total;
+updateTotal();
+
+}
+
+function increaseItem(i){
+
+cart[i].qty++;
+renderCart();
+
+}
+
+function decreaseItem(i){
+
+cart[i].qty--;
+
+if(cart[i].qty<=0){
+cart.splice(i,1);
+}
+
+renderCart();
+
+}
+
+function removeItem(i){
+
+cart.splice(i,1);
+renderCart();
 
 }
 
@@ -406,9 +462,11 @@ return;
 }
 
 let items="";
+let total=0;
 
 cart.forEach(i=>{
 items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
+total+=i.price*i.qty;
 });
 
 let text=
