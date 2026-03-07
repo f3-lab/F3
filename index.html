@@ -26,6 +26,31 @@ border-radius:14px;
 margin-bottom:18px;
 }
 
+/* вкладки */
+
+.tabs{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.tab{
+flex:1;
+padding:12px;
+border:none;
+border-radius:10px;
+background:#e0e0e0;
+font-weight:700;
+cursor:pointer;
+}
+
+.tab.active{
+background:#ff7a00;
+color:white;
+}
+
+/* карточки */
+
 .product{
 background:white;
 padding:14px;
@@ -38,10 +63,6 @@ box-shadow:0 3px 8px rgba(0,0,0,0.08);
 width:100%;
 border-radius:10px;
 margin-bottom:10px;
-}
-
-.product h3{
-margin:6px 0;
 }
 
 .description{
@@ -86,14 +107,15 @@ display:none;
 margin-top:8px;
 }
 
-input{
-width:100%;
-padding:12px;
-margin-top:10px;
-border-radius:10px;
-border:1px solid #ccc;
-font-size:16px;
+.menu{
+display:none;
 }
+
+.menu.active{
+display:block;
+}
+
+/* корзина */
 
 .cart{
 margin-top:25px;
@@ -109,6 +131,15 @@ font-weight:700;
 margin-top:10px;
 }
 
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
 </style>
 
 </head>
@@ -117,6 +148,22 @@ margin-top:10px;
 
 <img class="header-logo" src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8224.jpeg">
 
+<div class="tabs">
+
+<button class="tab active" onclick="switchMenu('home',this)">
+🍽 Домашнее меню
+</button>
+
+<button class="tab" onclick="switchMenu('buffet',this)">
+🥂 Фуршетное меню
+</button>
+
+</div>
+
+
+<!-- ДОМАШНЕЕ МЕНЮ -->
+
+<div id="home" class="menu active">
 
 <div class="product">
 
@@ -125,19 +172,18 @@ margin-top:10px;
 <h3>Холодец</h3>
 
 <p class="description">
-Состав: говядина, свинина, курица<br>
-Вес: 400 г
+Говядина, свинина, курица • 400 г
 </p>
 
 <p class="price">100 R$</p>
 
 <button onclick="addToCart('Холодец',100)">Добавить</button>
 
-<button id="btn1" class="sauce-button" onclick="toggleSauces('sauce1','btn1')">
+<button id="btn1" class="sauce-button" onclick="toggleSauces('s1','btn1')">
 🌶 Соусы ▼
 </button>
 
-<div class="sauces" id="sauce1">
+<div class="sauces" id="s1">
 
 <button class="mustard" onclick="addToCart('Русская горчица',15)">
 Русская горчица +15 R$
@@ -146,7 +192,6 @@ margin-top:10px;
 </div>
 
 </div>
-
 
 
 <div class="product">
@@ -156,19 +201,18 @@ margin-top:10px;
 <h3>Буженина</h3>
 
 <p class="description">
-Состав: свинина<br>
-Вес: 200 г
+Свинина • 200 г
 </p>
 
 <p class="price">120 R$</p>
 
 <button onclick="addToCart('Буженина',120)">Добавить</button>
 
-<button id="btn2" class="sauce-button" onclick="toggleSauces('sauce2','btn2')">
+<button id="btn2" class="sauce-button" onclick="toggleSauces('s2','btn2')">
 🌶 Соусы ▼
 </button>
 
-<div class="sauces" id="sauce2">
+<div class="sauces" id="s2">
 
 <button class="mustard" onclick="addToCart('Русская горчица',15)">
 Русская горчица +15 R$
@@ -179,7 +223,6 @@ margin-top:10px;
 </div>
 
 
-
 <div class="product">
 
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
@@ -187,16 +230,14 @@ margin-top:10px;
 <h3>Лосось с/с</h3>
 
 <p class="description">
-Состав: слабосолёный лосось<br>
-Вес: 120 г
+120 г
 </p>
 
 <p class="price">100 R$</p>
 
-<button onclick="addToCart('Лосось с/с',100)">Добавить</button>
+<button onclick="addToCart('Лосось',100)">Добавить</button>
 
 </div>
-
 
 
 <div class="product">
@@ -206,19 +247,18 @@ margin-top:10px;
 <h3>Шашлык</h3>
 
 <p class="description">
-Состав: свинина<br>
-Вес: 200 г
+Свинина • 200 г
 </p>
 
 <p class="price">120 R$</p>
 
 <button onclick="addToCart('Шашлык',120)">Добавить</button>
 
-<button id="btn3" class="sauce-button" onclick="toggleSauces('sauce3','btn3')">
+<button id="btn3" class="sauce-button" onclick="toggleSauces('s3','btn3')">
 🌶 Соусы ▼
 </button>
 
-<div class="sauces" id="sauce3">
+<div class="sauces" id="s3">
 
 <button class="adjika" onclick="addToCart('Аджика',15)">
 Аджика +15 R$
@@ -228,7 +268,37 @@ margin-top:10px;
 
 </div>
 
+</div>
 
+
+
+<!-- ФУРШЕТНОЕ МЕНЮ -->
+
+<div id="buffet" class="menu">
+
+<div class="product">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Canape.jpg">
+
+<h3>Канапе</h3>
+
+<p class="description">
+Фуршетные мини-закуски
+</p>
+
+<p class="price">120 R$ / сет</p>
+
+<button onclick="addToCart('Канапе сет',120)">
+Добавить
+</button>
+
+</div>
+
+</div>
+
+
+
+<!-- КОРЗИНА -->
 
 <div class="cart">
 
@@ -256,8 +326,23 @@ tg.expand();
 
 let cart=[];
 let total=0;
-
 let userData = tg.initDataUnsafe.user || {};
+
+function switchMenu(menu,btn){
+
+document.querySelectorAll('.menu').forEach(m=>{
+m.classList.remove('active');
+});
+
+document.getElementById(menu).classList.add('active');
+
+document.querySelectorAll('.tab').forEach(t=>{
+t.classList.remove('active');
+});
+
+btn.classList.add('active');
+
+}
 
 function toggleSauces(id,btn){
 
@@ -265,22 +350,18 @@ let block=document.getElementById(id);
 let button=document.getElementById(btn);
 
 if(block.style.display==="block"){
-
 block.style.display="none";
 button.innerHTML="🌶 Соусы ▼";
-
 }else{
-
 block.style.display="block";
 button.innerHTML="🌶 Соусы ▲";
-
 }
 
 }
 
 function addToCart(name,price){
 
-let existing=cart.find(item=>item.name===name);
+let existing=cart.find(i=>i.name===name);
 
 if(existing){
 existing.qty+=1;
@@ -301,7 +382,8 @@ let cartDiv=document.getElementById("cart");
 cartDiv.innerHTML="";
 
 cart.forEach(item=>{
-cartDiv.innerHTML+="<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
+cartDiv.innerHTML+=
+"<p>"+item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$</p>";
 });
 
 document.getElementById("total").innerText=total;
@@ -323,10 +405,10 @@ alert("Введите телефон и адрес");
 return;
 }
 
-let itemsText="";
+let items="";
 
-cart.forEach(item=>{
-itemsText+=item.name+" x"+item.qty+" = "+(item.price*item.qty)+" R$\n";
+cart.forEach(i=>{
+items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
 });
 
 let text=
@@ -334,7 +416,7 @@ let text=
 "👤 "+(userData.first_name||"")+" @"+(userData.username||"")+"\n\n"+
 "📱 "+phone+"\n\n"+
 "📍 "+address+"\n\n"+
-itemsText+
+items+
 "\n💰 Итого: "+total+" R$";
 
 let url="https://t.me/kirillvist?text="+encodeURIComponent(text);
