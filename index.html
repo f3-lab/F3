@@ -273,47 +273,9 @@ font-size:16px;
 
 <div class="sauces" id="s3">
 
-<button class="adjika" onclick="addToCart('Аджика 🌶️🌶️🌶️',15)">
-Аджика +15 R$
+<button class="adjika" onclick="addToCart('Аджика 🌶',15)">
+🌶 Аджика +15 R$
 </button>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div id="buffet" class="menu">
-
-<div class="product">
-
-<img src="https://raw.githubusercontent.com/f3-lab/F3/main/4B546A5A-6CF8-4677-9CAA-A63CDDDCF026.jpeg">
-
-<h3>Канапе 20шт</h3>
-
-<p class="description">
-Выберите варианты
-</p>
-
-<div class="canape">
-
-<button onclick="addToCart('Канапе тост буженина / корнишон',120)">Тост буженина / корнишон</button>
-
-<button onclick="addToCart('Канапе тост креветка / черри',120)">Тост креветка / черри</button>
-
-<button onclick="addToCart('Канапе тост лосось / оливка',120)">Тост лосось / оливка</button>
-
-<button onclick="addToCart('Канапе тост кальмар / свежий огурец',120)">Тост кальмар / св. огурец</button>
-
-<button onclick="addToCart('Канапе тост сыровяленое мясо / вишня',120)">Тост сыровяленое мясо</button>
-
-<button onclick="addToCart('Канапе тост моцарелла / черри',120)">Тост моцарелла / черри</button>
-
-<button onclick="addToCart('Канапе тост ростбиф / корнишон',120)">Тост ростбиф / корнишон</button>
-
-<button onclick="addToCart('Канапе тост сыр бри / клубника',120)">Тост сыр бри / клубника</button>
 
 </div>
 
@@ -373,10 +335,10 @@ let button=document.getElementById(btn);
 
 if(block.style.display==="block"){
 block.style.display="none";
-button.innerHTML="🌶 Соусы ▼";
+button.innerHTML="Соусы ▼";
 }else{
 block.style.display="block";
-button.innerHTML="🌶 Соусы ▲";
+button.innerHTML="Соусы ▲";
 }
 
 }
@@ -486,11 +448,11 @@ total+=i.price*i.qty;
 });
 
 let text=
-"✅ Новый заказ\n\n"+
-"📱 "+phone+"\n\n"+
-"📍 "+address+"\n\n"+
+"Новый заказ\n\n"+
+"Телефон: "+phone+"\n\n"+
+"Адрес: "+address+"\n\n"+
 items+
-"\n💰 Итого: "+total+" R$";
+"\nИтого: "+total+" R$";
 
 let url="https://t.me/F3FOOD?text="+encodeURIComponent(text);
 
