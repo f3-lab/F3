@@ -53,12 +53,18 @@ padding:14px;
 margin:14px 0;
 border-radius:12px;
 box-shadow:0 3px 8px rgba(0,0,0,0.08);
+transition:0.2s;
 }
 
 .product img{
 width:100%;
 border-radius:10px;
 margin-bottom:10px;
+}
+
+.product.added{
+transform:scale(1.05);
+box-shadow:0 0 12px rgba(39,174,96,0.6);
 }
 
 .description{
@@ -82,38 +88,6 @@ width:100%;
 margin-top:6px;
 font-size:16px;
 cursor:pointer;
-}
-
-.sauce-button{
-background:#ff7a00;
-font-weight:700;
-}
-
-.mustard{
-background:#f1c40f;
-color:black;
-}
-
-.adjika{
-background:#e74c3c;
-}
-
-.ketchup{
-background:#ff8a8a;
-}
-
-.bbq{
-background:#6b0f1a;
-}
-
-.tartar{
-background:#e8d7b9;
-color:black;
-}
-
-.sauces{
-display:none;
-margin-top:8px;
 }
 
 .menu{
@@ -155,7 +129,6 @@ font-size:14px;
 
 .clear-cart{
 background:#c0392b;
-margin-left:6px;
 }
 
 input{
@@ -165,6 +138,13 @@ margin-top:10px;
 border-radius:10px;
 border:1px solid #ccc;
 font-size:16px;
+}
+
+.minimum{
+text-align:center;
+margin-top:12px;
+font-weight:700;
+color:#444;
 }
 
 </style>
@@ -187,6 +167,8 @@ font-size:16px;
 
 </div>
 
+<!-- ДОМАШНЕЕ МЕНЮ -->
+
 <div id="home" class="menu active">
 
 <div class="product">
@@ -194,7 +176,7 @@ font-size:16px;
 <h3>Холодец три мяса</h3>
 <p class="description">Говядина, свинина, курица • 500 г</p>
 <p class="price">75 R$</p>
-<button onclick="addToCart('Холодец',75)">Добавить</button>
+<button onclick="addToCart(event,'Холодец',75)">Добавить</button>
 </div>
 
 <div class="product">
@@ -202,7 +184,7 @@ font-size:16px;
 <h3>Оливье (мясной)</h3>
 <p class="description">Классический салат с говядиной • 500 г</p>
 <p class="price">55 R$</p>
-<button onclick="addToCart('Оливье с говядиной 500г',55)">Добавить</button>
+<button onclick="addToCart(event,'Оливье',55)">Добавить</button>
 </div>
 
 <div class="product">
@@ -210,15 +192,15 @@ font-size:16px;
 <h3>Буженина</h3>
 <p class="description">Свинина • 300 г</p>
 <p class="price">40 R$</p>
-<button onclick="addToCart('Буженина',40)">Добавить</button>
+<button onclick="addToCart(event,'Буженина',40)">Добавить</button>
 </div>
 
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
 <h3>Лосось с/с</h3>
-<p class="description">Нежное филе лосося слабого посола • 300 г</p>
+<p class="description">Лосось слабосоленый • 300 г</p>
 <p class="price">75 R$</p>
-<button onclick="addToCart('Лосось',75)">Добавить</button>
+<button onclick="addToCart(event,'Лосось',75)">Добавить</button>
 </div>
 
 <div class="product">
@@ -226,15 +208,45 @@ font-size:16px;
 <h3>Шашлык</h3>
 <p class="description">Свинина • 250 г</p>
 <p class="price">60 R$</p>
-<button onclick="addToCart('Шашлык',60)">Добавить</button>
+<button onclick="addToCart(event,'Шашлык',60)">Добавить</button>
 </div>
 
 <div class="product">
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
 <h3>Пирожки</h3>
-<p class="description">Начинка: капуста • 10 шт</p>
+<p class="description">Капуста • 10 шт</p>
 <p class="price">90 R$</p>
-<button onclick="addToCart('Пирожки с капустой (10шт)',90)">Добавить</button>
+<button onclick="addToCart(event,'Пирожки',90)">Добавить</button>
+</div>
+
+</div>
+
+<!-- ФУРШЕТНОЕ МЕНЮ -->
+
+<div id="buffet" class="menu">
+
+<div class="product">
+
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/4B546A5A-6CF8-4677-9CAA-A63CDDDCF026.jpeg">
+
+<h3>Канапе 20 шт</h3>
+
+<button onclick="addToCart(event,'Канапе буженина / корнишон',120)">
+Буженина / корнишон
+</button>
+
+<button onclick="addToCart(event,'Креветка / черри',120)">
+Креветка / черри
+</button>
+
+<button onclick="addToCart(event,'Лосось / оливка',120)">
+Лосось / оливка
+</button>
+
+<button onclick="addToCart(event,'Кальмар / огурец',120)">
+Кальмар / огурец
+</button>
+
 </div>
 
 </div>
@@ -255,11 +267,16 @@ font-size:16px;
 
 <button onclick="sendOrder()">Сделать заказ</button>
 
+<div class="minimum">
+Минимальный заказ от 150 реал
+</div>
+
 </div>
 
 <script>
 
 let cart=[];
+const MIN_ORDER=150;
 
 function switchMenu(menu,btn){
 
@@ -277,7 +294,14 @@ btn.classList.add('active');
 
 }
 
-function addToCart(name,price){
+function addToCart(event,name,price){
+
+let product=event.target.closest('.product');
+product.classList.add("added");
+
+setTimeout(()=>{
+product.classList.remove("added");
+},300);
 
 let existing=cart.find(i=>i.name===name);
 
@@ -300,7 +324,6 @@ function renderCart(){
 
 let cartDiv=document.getElementById("cart");
 cartDiv.innerHTML="";
-
 let total=0;
 
 cart.forEach((item,index)=>{
@@ -316,10 +339,15 @@ ${item.name} x${item.qty} = ${item.price*item.qty} R$
 </div>
 
 <div class="cart-controls">
+
 <button onclick="cart[${index}].qty--;if(cart[${index}].qty<=0)cart.splice(${index},1);renderCart()">➖</button>
+
 <button onclick="cart[${index}].qty++;renderCart()">➕</button>
+
 <button onclick="cart.splice(${index},1);renderCart()">❌</button>
-<button class="clear-cart" onclick="clearCart()">Очистить корзину</button>
+
+<button class="clear-cart" onclick="clearCart()">Очистить</button>
+
 </div>
 
 </div>
@@ -334,14 +362,19 @@ document.getElementById("total").innerText=total;
 
 function sendOrder(){
 
+let total=0;
+cart.forEach(i=>{
+total+=i.price*i.qty;
+});
+
+if(total<MIN_ORDER){
+alert("Минимальный заказ 150 R$");
+return;
+}
+
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let address=document.getElementById("address").value;
-
-if(cart.length===0){
-alert("Корзина пустая");
-return;
-}
 
 if(name===""||phone===""||address===""){
 alert("Заполните все поля");
@@ -349,11 +382,8 @@ return;
 }
 
 let items="";
-let total=0;
-
 cart.forEach(i=>{
 items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
-total+=i.price*i.qty;
 });
 
 let text=
