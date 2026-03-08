@@ -163,6 +163,14 @@ text-align:center;
 font-weight:700;
 margin-top:10px;
 cursor:pointer;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+}
+
+.arrow{
+font-size:18px;
 }
 
 .sauce-list{
@@ -214,131 +222,89 @@ color:black;
 <div id="home" class="menu active">
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
-
 <h3>Холодец три мяса</h3>
-
 <p class="description">Говядина, свинина, курица • 500 г</p>
-
 <p class="price">75 R$</p>
-
 <button onclick="addToCart(event,'Холодец',75)">Добавить</button>
 
-<div class="sauce-title" onclick="toggleSauce('sauce1')">Соусы</div>
+<div class="sauce-title" onclick="toggleSauce('sauce1','arrow1')">
+Соусы <span id="arrow1" class="arrow">⬇</span>
+</div>
 
 <div id="sauce1" class="sauce-list">
-<button class="mustard" onclick="addToCart(event,'Русская горчица',15)">
-Русская горчица • 15 R$
-</button>
+<button class="mustard" onclick="addToCart(event,'Русская горчица',15)">Русская горчица • 15 R$</button>
 </div>
 
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/412B2F56-0B79-4E41-8AF1-207DD9218157.png">
-
 <h3>Салат «Оливье»</h3>
-
 <p class="description">Классический салат с говядиной • 500 г</p>
-
 <p class="price">55 R$</p>
-
 <button onclick="addToCart(event,'Оливье',55)">Добавить</button>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/1786510D-307E-465E-B442-C4F73382BC73.png">
-
 <h3>Салат с кальмаром</h3>
-
 <p class="description">Кальмар, красный лук, огурец, яйца • 500 г</p>
-
 <p class="price">50 R$</p>
-
 <button onclick="addToCart(event,'Салат с кальмаром',50)">Добавить</button>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
-
 <h3>Буженина</h3>
-
 <p class="description">Свинина • 300 г</p>
-
 <p class="price">40 R$</p>
-
 <button onclick="addToCart(event,'Буженина',40)">Добавить</button>
 
-<div class="sauce-title" onclick="toggleSauce('sauce2')">Соусы</div>
+<div class="sauce-title" onclick="toggleSauce('sauce2','arrow2')">
+Соусы <span id="arrow2" class="arrow">⬇</span>
+</div>
 
 <div id="sauce2" class="sauce-list">
-<button class="mustard" onclick="addToCart(event,'Русская горчица',15)">
-Русская горчица • 15 R$
-</button>
+<button class="mustard" onclick="addToCart(event,'Русская горчица',15)">Русская горчица • 15 R$</button>
 </div>
 
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
-
 <h3>Лосось с/с</h3>
-
 <p class="description">Лосось слабосоленый • 300 г</p>
-
 <p class="price">75 R$</p>
-
 <button onclick="addToCart(event,'Лосось',75)">Добавить</button>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
-
 <h3>Шашлык</h3>
-
 <p class="description">Свинина • 250 г</p>
-
 <p class="price">60 R$</p>
-
 <button onclick="addToCart(event,'Шашлык',60)">Добавить</button>
 
-<div class="sauce-title" onclick="toggleSauce('sauce3')">Соусы</div>
+<div class="sauce-title" onclick="toggleSauce('sauce3','arrow3')">
+Соусы <span id="arrow3" class="arrow">⬇</span>
+</div>
 
 <div id="sauce3" class="sauce-list">
-
 <button class="adjika" onclick="addToCart(event,'Аджика',15)">Аджика 🌶️ • 15 R$</button>
-
 <button class="ketchup" onclick="addToCart(event,'Кетчуп',5)">Кетчуп • 5 R$</button>
-
 <button class="bbq" onclick="addToCart(event,'BBQ',5)">BBQ • 5 R$</button>
-
 <button class="tartar" onclick="addToCart(event,'Тартар',10)">Тартар • 10 R$</button>
-
 </div>
 
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
-
 <h3>Пирожки</h3>
-
 <p class="description">Капуста • 10 шт</p>
-
 <p class="price">90 R$</p>
-
 <button onclick="addToCart(event,'Пирожки',90)">Добавить</button>
-
 </div>
 
 </div>
@@ -398,9 +364,19 @@ color:black;
 let cart=[];
 const MIN_ORDER=150;
 
-function toggleSauce(id){
+function toggleSauce(id,arrowId){
+
 let el=document.getElementById(id);
-el.style.display = el.style.display === "block" ? "none" : "block";
+let arrow=document.getElementById(arrowId);
+
+if(el.style.display==="block"){
+el.style.display="none";
+arrow.innerHTML="⬇";
+}else{
+el.style.display="block";
+arrow.innerHTML="⬆";
+}
+
 }
 
 function switchMenu(menu,btn){
