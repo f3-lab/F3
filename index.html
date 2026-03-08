@@ -84,6 +84,46 @@ font-size:16px;
 cursor:pointer;
 }
 
+.sauce-button{
+background:#ff7a00;
+font-weight:700;
+}
+
+.mustard{
+background:#f1c40f;
+color:black;
+}
+
+.adjika{
+background:#e74c3c;
+}
+
+.ketchup{
+background:#ff8a8a;
+}
+
+.bbq{
+background:#6b0f1a;
+}
+
+.tartar{
+background:#e8d7b9;
+color:black;
+}
+
+.sauces{
+display:none;
+margin-top:8px;
+}
+
+.menu{
+display:none;
+}
+
+.menu.active{
+display:block;
+}
+
 .cart{
 margin-top:25px;
 background:white;
@@ -125,21 +165,6 @@ margin-top:10px;
 border-radius:10px;
 border:1px solid #ccc;
 font-size:16px;
-}
-
-.menu{
-display:none;
-}
-
-.menu.active{
-display:block;
-}
-
-.minimum{
-text-align:center;
-margin-top:15px;
-font-weight:700;
-color:#444;
 }
 
 </style>
@@ -230,10 +255,6 @@ color:#444;
 
 <button onclick="sendOrder()">Сделать заказ</button>
 
-<div class="minimum">
-Минимальный заказ от 150 реал
-</div>
-
 </div>
 
 <script>
@@ -298,7 +319,7 @@ ${item.name} x${item.qty} = ${item.price*item.qty} R$
 <button onclick="cart[${index}].qty--;if(cart[${index}].qty<=0)cart.splice(${index},1);renderCart()">➖</button>
 <button onclick="cart[${index}].qty++;renderCart()">➕</button>
 <button onclick="cart.splice(${index},1);renderCart()">❌</button>
-<button class="clear-cart" onclick="clearCart()">Очистить</button>
+<button class="clear-cart" onclick="clearCart()">Очистить корзину</button>
 </div>
 
 </div>
