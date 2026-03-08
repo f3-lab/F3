@@ -229,7 +229,7 @@ color:black;
 <button onclick="addToCart(event,'Холодец',75)">Добавить</button>
 
 <div class="sauce-title" onclick="toggleSauce('sauce1','arrow1')">
-Соусы <span id="arrow1" class="arrow">⬇</span>
+Соусы <span id="arrow1" class="arrow">🔻</span>
 </div>
 
 <div id="sauce1" class="sauce-list">
@@ -262,7 +262,7 @@ color:black;
 <button onclick="addToCart(event,'Буженина',40)">Добавить</button>
 
 <div class="sauce-title" onclick="toggleSauce('sauce2','arrow2')">
-Соусы <span id="arrow2" class="arrow">⬇</span>
+Соусы <span id="arrow2" class="arrow">🔻</span>
 </div>
 
 <div id="sauce2" class="sauce-list">
@@ -287,7 +287,7 @@ color:black;
 <button onclick="addToCart(event,'Шашлык',60)">Добавить</button>
 
 <div class="sauce-title" onclick="toggleSauce('sauce3','arrow3')">
-Соусы <span id="arrow3" class="arrow">⬇</span>
+Соусы <span id="arrow3" class="arrow">🔻</span>
 </div>
 
 <div id="sauce3" class="sauce-list">
@@ -371,10 +371,10 @@ let arrow=document.getElementById(arrowId);
 
 if(el.style.display==="block"){
 el.style.display="none";
-arrow.innerHTML="⬇";
+arrow.innerHTML="🔻";
 }else{
 el.style.display="block";
-arrow.innerHTML="⬆";
+arrow.innerHTML="🔺";
 }
 
 }
