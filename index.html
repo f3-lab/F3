@@ -99,7 +99,7 @@ background:#e74c3c;
 }
 
 .ketchup{
-background:#ff6b6b;
+background:#ff8a8a;
 }
 
 .bbq{
@@ -153,12 +153,6 @@ margin-left:4px;
 font-size:14px;
 }
 
-.canape{
-border-top:1px solid #eee;
-padding-top:8px;
-margin-top:8px;
-}
-
 input,select{
 width:100%;
 padding:12px;
@@ -188,6 +182,8 @@ font-size:16px;
 
 </div>
 
+
+<!-- ДОМАШНЕЕ МЕНЮ -->
 
 <div id="home" class="menu active">
 
@@ -301,12 +297,12 @@ font-size:16px;
 
 <div class="product">
 
-<img src="https://github.com/f3-lab/F3/blob/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
 
-<h3>Пирожок</h3>
+<h3>Пирожки</h3>
 
 <p class="description">
-Капуста • 10 шт
+Начинка: капуста • 10 шт
 </p>
 
 <p class="price">90 R$</p>
@@ -317,8 +313,43 @@ font-size:16px;
 
 </div>
 
+</div>
+
+
+<!-- ФУРШЕТНОЕ МЕНЮ -->
+
+<div id="buffet" class="menu">
+
+<div class="product">
+
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/4B546A5A-6CF8-4677-9CAA-A63CDDDCF026.jpeg">
+
+<h3>Канапе 20шт</h3>
+
+<p class="description">
+Выберите варианты
+</p>
+
+<button onclick="addToCart('Канапе тост буженина / корнишон',120)">
+Тост буженина / корнишон
+</button>
+
+<button onclick="addToCart('Канапе тост креветка / черри',120)">
+Тост креветка / черри
+</button>
+
+<button onclick="addToCart('Канапе тост лосось / оливка',120)">
+Тост лосось / оливка
+</button>
+
+<button onclick="addToCart('Канапе тост кальмар / свежий огурец',120)">
+Тост кальмар / св. огурец
+</button>
 
 </div>
+
+</div>
+
 
 
 <div class="cart">
@@ -350,9 +381,6 @@ font-size:16px;
 
 <script>
 
-const tg = window.Telegram.WebApp;
-tg.expand();
-
 let cart=[];
 
 function switchMenu(menu,btn){
@@ -373,4 +401,109 @@ btn.classList.add('active');
 
 function toggleSauces(id,btn){
 
-let block
+let block=document.getElementById(id);
+let button=document.getElementById(btn);
+
+if(block.style.display==="block"){
+block.style.display="none";
+button.innerHTML="Соусы ▼";
+}else{
+block.style.display="block";
+button.innerHTML="Соусы ▲";
+}
+
+}
+
+function addToCart(name,price){
+
+let existing=cart.find(i=>i.name===name);
+
+if(existing){
+existing.qty+=1;
+}else{
+cart.push({name,price,qty:1});
+}
+
+renderCart();
+
+}
+
+function renderCart(){
+
+let cartDiv=document.getElementById("cart");
+cartDiv.innerHTML="";
+
+let total=0;
+
+cart.forEach((item,index)=>{
+
+total+=item.price*item.qty;
+
+cartDiv.innerHTML+=`
+
+<div class="cart-item">
+
+<div>
+${item.name} x${item.qty} = ${item.price*item.qty} R$
+</div>
+
+<div class="cart-controls">
+<button onclick="cart[${index}].qty--;if(cart[${index}].qty<=0)cart.splice(${index},1);renderCart()">➖</button>
+<button onclick="cart[${index}].qty++;renderCart()">➕</button>
+<button onclick="cart.splice(${index},1);renderCart()">❌</button>
+</div>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("total").innerText=total;
+
+}
+
+function sendOrder(){
+
+let name=document.getElementById("name").value;
+let phone=document.getElementById("phone").value;
+let address=document.getElementById("address").value;
+let payment=document.getElementById("payment").value;
+
+if(cart.length===0){
+alert("Корзина пустая");
+return;
+}
+
+if(name===""||phone===""||address===""||payment===""){
+alert("Заполните все поля");
+return;
+}
+
+let items="";
+let total=0;
+
+cart.forEach(i=>{
+items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
+total+=i.price*i.qty;
+});
+
+let text=
+"Новый заказ\n\n"+
+"Имя: "+name+"\n"+
+"Телефон: "+phone+"\n"+
+"Адрес: "+address+"\n"+
+"Оплата: "+payment+"\n\n"+
+items+
+"\nИтого: "+total+" R$";
+
+let url="https://t.me/F3FOOD?text="+encodeURIComponent(text);
+
+window.open(url,"_blank");
+
+}
+
+</script>
+
+</body>
+</html>
