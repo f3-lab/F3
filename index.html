@@ -98,6 +98,19 @@ color:black;
 background:#e74c3c;
 }
 
+.ketchup{
+background:#ff6b6b;
+}
+
+.bbq{
+background:#6b0f1a;
+}
+
+.tartar{
+background:#e8d7b9;
+color:black;
+}
+
 .sauces{
 display:none;
 margin-top:8px;
@@ -275,15 +288,35 @@ font-size:16px;
 
 <button class="adjika" onclick="addToCart('Аджика 🌶',15)">🌶 Аджика +15 R$</button>
 
-<button onclick="addToCart('Кетчуп',5)">Кетчуп +5 R$</button>
+<button class="ketchup" onclick="addToCart('Кетчуп',5)">Кетчуп +5 R$</button>
 
-<button onclick="addToCart('BBQ',5)">BBQ +5 R$</button>
+<button class="bbq" onclick="addToCart('BBQ',5)">BBQ +5 R$</button>
 
-<button onclick="addToCart('Соус Тартар',10)">Тартар +10 R$</button>
+<button class="tartar" onclick="addToCart('Соус Тартар',10)">Тартар +10 R$</button>
+
+</div>
 
 </div>
 
+
+<div class="product">
+
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8513.jpeg">
+
+<h3>Пирожок</h3>
+
+<p class="description">
+Начинка: капуста • 10 шт
+</p>
+
+<p class="price">90 R$</p>
+
+<button onclick="addToCart('Пирожки с капустой (10шт)',90)">
+Добавить
+</button>
+
 </div>
+
 
 </div>
 
@@ -340,141 +373,4 @@ btn.classList.add('active');
 
 function toggleSauces(id,btn){
 
-let block=document.getElementById(id);
-let button=document.getElementById(btn);
-
-if(block.style.display==="block"){
-block.style.display="none";
-button.innerHTML="Соусы ▼";
-}else{
-block.style.display="block";
-button.innerHTML="Соусы ▲";
-}
-
-}
-
-function addToCart(name,price){
-
-let existing=cart.find(i=>i.name===name);
-
-if(existing){
-existing.qty+=1;
-}else{
-cart.push({name,price,qty:1});
-}
-
-renderCart();
-
-}
-
-function updateTotal(){
-
-let total=0;
-
-cart.forEach(i=>{
-total+=i.price*i.qty;
-});
-
-document.getElementById("total").innerText=total;
-
-return total;
-
-}
-
-function renderCart(){
-
-let cartDiv=document.getElementById("cart");
-cartDiv.innerHTML="";
-
-cart.forEach((item,index)=>{
-
-cartDiv.innerHTML+=`
-
-<div class="cart-item">
-
-<div>
-${item.name} x${item.qty} = ${item.price*item.qty} R$
-</div>
-
-<div class="cart-controls">
-<button onclick="decreaseItem(${index})">➖</button>
-<button onclick="increaseItem(${index})">➕</button>
-<button onclick="removeItem(${index})">❌</button>
-</div>
-
-</div>
-
-`;
-
-});
-
-updateTotal();
-
-}
-
-function increaseItem(i){
-cart[i].qty++;
-renderCart();
-}
-
-function decreaseItem(i){
-
-cart[i].qty--;
-
-if(cart[i].qty<=0){
-cart.splice(i,1);
-}
-
-renderCart();
-
-}
-
-function removeItem(i){
-cart.splice(i,1);
-renderCart();
-}
-
-function sendOrder(){
-
-let name=document.getElementById("name").value;
-let phone=document.getElementById("phone").value;
-let address=document.getElementById("address").value;
-let payment=document.getElementById("payment").value;
-
-if(cart.length===0){
-alert("Корзина пустая");
-return;
-}
-
-if(name===""||phone===""||address===""||payment===""){
-alert("Заполните все поля");
-return;
-}
-
-let items="";
-let total=0;
-
-cart.forEach(i=>{
-items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
-total+=i.price*i.qty;
-});
-
-let text=
-"Новый заказ\n\n"+
-"Имя: "+name+"\n"+
-"Телефон: "+phone+"\n"+
-"Адрес: "+address+"\n"+
-"Оплата: "+payment+"\n\n"+
-items+
-"\nИтого: "+total+" R$";
-
-let url="https://t.me/F3FOOD?text="+encodeURIComponent(text);
-
-window.open(url,"_blank");
-
-}
-
-</script>
-
-</body>
-</html>
+let block
