@@ -127,10 +127,6 @@ margin-left:4px;
 font-size:14px;
 }
 
-.clear-cart{
-background:#c0392b;
-}
-
 input{
 width:100%;
 padding:12px;
@@ -166,8 +162,6 @@ color:#444;
 </button>
 
 </div>
-
-<!-- ДОМАШНЕЕ МЕНЮ -->
 
 <div id="home" class="menu active">
 
@@ -221,8 +215,6 @@ color:#444;
 
 </div>
 
-<!-- ФУРШЕТНОЕ МЕНЮ -->
-
 <div id="buffet" class="menu">
 
 <div class="product">
@@ -231,21 +223,10 @@ color:#444;
 
 <h3>Канапе 20 шт</h3>
 
-<button onclick="addToCart(event,'Канапе буженина / корнишон',120)">
-Буженина / корнишон
-</button>
-
-<button onclick="addToCart(event,'Креветка / черри',120)">
-Креветка / черри
-</button>
-
-<button onclick="addToCart(event,'Лосось / оливка',120)">
-Лосось / оливка
-</button>
-
-<button onclick="addToCart(event,'Кальмар / огурец',120)">
-Кальмар / огурец
-</button>
+<button onclick="addToCart(event,'Канапе буженина / корнишон',120)">Буженина / корнишон</button>
+<button onclick="addToCart(event,'Креветка / черри',120)">Креветка / черри</button>
+<button onclick="addToCart(event,'Лосось / оливка',120)">Лосось / оливка</button>
+<button onclick="addToCart(event,'Кальмар / огурец',120)">Кальмар / огурец</button>
 
 </div>
 
@@ -280,16 +261,10 @@ const MIN_ORDER=150;
 
 function switchMenu(menu,btn){
 
-document.querySelectorAll('.menu').forEach(m=>{
-m.classList.remove('active');
-});
-
+document.querySelectorAll('.menu').forEach(m=>{m.classList.remove('active');});
 document.getElementById(menu).classList.add('active');
 
-document.querySelectorAll('.tab').forEach(t=>{
-t.classList.remove('active');
-});
-
+document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');});
 btn.classList.add('active');
 
 }
@@ -299,9 +274,7 @@ function addToCart(event,name,price){
 let product=event.target.closest('.product');
 product.classList.add("added");
 
-setTimeout(()=>{
-product.classList.remove("added");
-},300);
+setTimeout(()=>{product.classList.remove("added");},300);
 
 let existing=cart.find(i=>i.name===name);
 
@@ -313,11 +286,6 @@ cart.push({name,price,qty:1});
 
 renderCart();
 
-}
-
-function clearCart(){
-cart=[];
-renderCart();
 }
 
 function renderCart(){
@@ -346,8 +314,6 @@ ${item.name} x${item.qty} = ${item.price*item.qty} R$
 
 <button onclick="cart.splice(${index},1);renderCart()">❌</button>
 
-<button class="clear-cart" onclick="clearCart()">Очистить</button>
-
 </div>
 
 </div>
@@ -363,9 +329,7 @@ document.getElementById("total").innerText=total;
 function sendOrder(){
 
 let total=0;
-cart.forEach(i=>{
-total+=i.price*i.qty;
-});
+cart.forEach(i=>{total+=i.price*i.qty;});
 
 if(total<MIN_ORDER){
 alert("Минимальный заказ 150 R$");
