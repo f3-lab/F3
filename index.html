@@ -153,7 +153,12 @@ margin-left:4px;
 font-size:14px;
 }
 
-input,select{
+.clear-cart{
+background:#c0392b;
+margin-left:6px;
+}
+
+input{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -182,182 +187,54 @@ font-size:16px;
 
 </div>
 
-<!-- ДОМАШНЕЕ МЕНЮ -->
-
 <div id="home" class="menu active">
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
-
 <h3>Холодец три мяса</h3>
-
-<p class="description">
-Говядина, свинина, курица • 500 г
-</p>
-
+<p class="description">Говядина, свинина, курица • 500 г</p>
 <p class="price">75 R$</p>
-
 <button onclick="addToCart('Холодец',75)">Добавить</button>
-
-<button id="btn1" class="sauce-button" onclick="toggleSauces('s1','btn1')">
-Соусы ▼
-</button>
-
-<div class="sauces" id="s1">
-
-<button class="mustard" onclick="addToCart('Русская горчица',15)">
-Русская горчица +15 R$
-</button>
-
-</div>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/412B2F56-0B79-4E41-8AF1-207DD9218157.png">
-
 <h3>Оливье (мясной)</h3>
-
-<p class="description">
-Классический салат с говядиной • 500 г
-</p>
-
+<p class="description">Классический салат с говядиной • 500 г</p>
 <p class="price">55 R$</p>
-
-<button onclick="addToCart('Оливье с говядиной 500г',55)">
-Добавить
-</button>
-
+<button onclick="addToCart('Оливье с говядиной 500г',55)">Добавить</button>
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
-
 <h3>Буженина</h3>
-
-<p class="description">
-Свинина • 300 г
-</p>
-
+<p class="description">Свинина • 300 г</p>
 <p class="price">40 R$</p>
-
 <button onclick="addToCart('Буженина',40)">Добавить</button>
-
-<button id="btn2" class="sauce-button" onclick="toggleSauces('s2','btn2')">
-Соусы ▼
-</button>
-
-<div class="sauces" id="s2">
-
-<button class="mustard" onclick="addToCart('Русская горчица',15)">
-Русская горчица +15 R$
-</button>
-
-</div>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
-
 <h3>Лосось с/с</h3>
-
-<p class="description">
-Нежное филе лосося слабого посола • 300 г
-</p>
-
+<p class="description">Нежное филе лосося слабого посола • 300 г</p>
 <p class="price">75 R$</p>
-
 <button onclick="addToCart('Лосось',75)">Добавить</button>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
-
 <h3>Шашлык</h3>
-
-<p class="description">
-Свинина • 250 г
-</p>
-
+<p class="description">Свинина • 250 г</p>
 <p class="price">60 R$</p>
-
 <button onclick="addToCart('Шашлык',60)">Добавить</button>
-
-<button id="btn3" class="sauce-button" onclick="toggleSauces('s3','btn3')">
-Соусы ▼
-</button>
-
-<div class="sauces" id="s3">
-
-<button class="adjika" onclick="addToCart('Аджика 🌶',15)">🌶 Аджика +15 R$</button>
-
-<button class="ketchup" onclick="addToCart('Кетчуп',5)">Кетчуп +5 R$</button>
-
-<button class="bbq" onclick="addToCart('BBQ',5)">BBQ +5 R$</button>
-
-<button class="tartar" onclick="addToCart('Соус Тартар',10)">Тартар +10 R$</button>
-
-</div>
-
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
-
 <h3>Пирожки</h3>
-
-<p class="description">
-Начинка: капуста • 10 шт
-</p>
-
+<p class="description">Начинка: капуста • 10 шт</p>
 <p class="price">90 R$</p>
-
-<button onclick="addToCart('Пирожки с капустой (10шт)',90)">
-Добавить
-</button>
-
-</div>
-
-</div>
-
-<!-- ФУРШЕТНОЕ МЕНЮ -->
-
-<div id="buffet" class="menu">
-
-<div class="product">
-
-<img src="https://raw.githubusercontent.com/f3-lab/F3/main/4B546A5A-6CF8-4677-9CAA-A63CDDDCF026.jpeg">
-
-<h3>Канапе 20шт</h3>
-
-<p class="description">
-Выберите варианты
-</p>
-
-<button onclick="addToCart('Канапе тост буженина / корнишон',120)">
-Тост буженина / корнишон
-</button>
-
-<button onclick="addToCart('Канапе тост креветка / черри',120)">
-Тост креветка / черри
-</button>
-
-<button onclick="addToCart('Канапе тост лосось / оливка',120)">
-Тост лосось / оливка
-</button>
-
-<button onclick="addToCart('Канапе тост кальмар / свежий огурец',120)">
-Тост кальмар / св. огурец
-</button>
-
+<button onclick="addToCart('Пирожки с капустой (10шт)',90)">Добавить</button>
 </div>
 
 </div>
@@ -375,13 +252,6 @@ font-size:16px;
 <input id="name" placeholder="Имя">
 <input id="phone" placeholder="Телефон">
 <input id="address" placeholder="Адрес доставки">
-
-<select id="payment">
-<option value="">Способ оплаты</option>
-<option>Наличные</option>
-<option>Рубли</option>
-<option>USDT</option>
-</select>
 
 <button onclick="sendOrder()">Сделать заказ</button>
 
@@ -407,21 +277,6 @@ btn.classList.add('active');
 
 }
 
-function toggleSauces(id,btn){
-
-let block=document.getElementById(id);
-let button=document.getElementById(btn);
-
-if(block.style.display==="block"){
-block.style.display="none";
-button.innerHTML="Соусы ▼";
-}else{
-block.style.display="block";
-button.innerHTML="Соусы ▲";
-}
-
-}
-
 function addToCart(name,price){
 
 let existing=cart.find(i=>i.name===name);
@@ -434,6 +289,11 @@ cart.push({name,price,qty:1});
 
 renderCart();
 
+}
+
+function clearCart(){
+cart=[];
+renderCart();
 }
 
 function renderCart(){
@@ -459,6 +319,7 @@ ${item.name} x${item.qty} = ${item.price*item.qty} R$
 <button onclick="cart[${index}].qty--;if(cart[${index}].qty<=0)cart.splice(${index},1);renderCart()">➖</button>
 <button onclick="cart[${index}].qty++;renderCart()">➕</button>
 <button onclick="cart.splice(${index},1);renderCart()">❌</button>
+<button class="clear-cart" onclick="clearCart()">Очистить корзину</button>
 </div>
 
 </div>
@@ -476,14 +337,13 @@ function sendOrder(){
 let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let address=document.getElementById("address").value;
-let payment=document.getElementById("payment").value;
 
 if(cart.length===0){
 alert("Корзина пустая");
 return;
 }
 
-if(name===""||phone===""||address===""||payment===""){
+if(name===""||phone===""||address===""){
 alert("Заполните все поля");
 return;
 }
@@ -500,8 +360,7 @@ let text=
 "Новый заказ\n\n"+
 "Имя: "+name+"\n"+
 "Телефон: "+phone+"\n"+
-"Адрес: "+address+"\n"+
-"Оплата: "+payment+"\n\n"+
+"Адрес: "+address+"\n\n"+
 items+
 "\nИтого: "+total+" R$";
 
