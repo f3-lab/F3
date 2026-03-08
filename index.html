@@ -146,7 +146,7 @@ padding-top:8px;
 margin-top:8px;
 }
 
-input{
+input,select{
 width:100%;
 padding:12px;
 margin-top:10px;
@@ -166,11 +166,11 @@ font-size:16px;
 <div class="tabs">
 
 <button class="tab active" onclick="switchMenu('home',this)">
-🍽 Домашнее меню
+Домашнее меню
 </button>
 
 <button class="tab" onclick="switchMenu('buffet',this)">
-🥂 Фуршетное меню
+Фуршетное меню
 </button>
 
 </div>
@@ -273,16 +273,19 @@ font-size:16px;
 
 <div class="sauces" id="s3">
 
-<button class="adjika" onclick="addToCart('Аджика 🌶',15)">
-🌶 Аджика +15 R$
-</button>
+<button class="adjika" onclick="addToCart('Аджика 🌶',15)">🌶 Аджика +15 R$</button>
+
+<button onclick="addToCart('Кетчуп',5)">Кетчуп +5 R$</button>
+
+<button onclick="addToCart('BBQ',5)">BBQ +5 R$</button>
+
+<button onclick="addToCart('Соус Тартар',10)">Тартар +10 R$</button>
 
 </div>
 
 </div>
 
 </div>
-
 
 
 <div class="cart">
@@ -295,8 +298,16 @@ font-size:16px;
 Итого: <span id="total">0</span> R$
 </p>
 
+<input id="name" placeholder="Имя">
 <input id="phone" placeholder="Телефон">
 <input id="address" placeholder="Адрес доставки">
+
+<select id="payment">
+<option value="">Способ оплаты</option>
+<option>Наличные</option>
+<option>Рубли</option>
+<option>USDT</option>
+</select>
 
 <button onclick="sendOrder()">Сделать заказ</button>
 
@@ -310,7 +321,6 @@ const tg = window.Telegram.WebApp;
 tg.expand();
 
 let cart=[];
-let userData = tg.initDataUnsafe.user || {};
 
 function switchMenu(menu,btn){
 
@@ -426,16 +436,18 @@ renderCart();
 
 function sendOrder(){
 
+let name=document.getElementById("name").value;
 let phone=document.getElementById("phone").value;
 let address=document.getElementById("address").value;
+let payment=document.getElementById("payment").value;
 
 if(cart.length===0){
 alert("Корзина пустая");
 return;
 }
 
-if(phone===""||address===""){
-alert("Введите телефон и адрес");
+if(name===""||phone===""||address===""||payment===""){
+alert("Заполните все поля");
 return;
 }
 
@@ -449,18 +461,16 @@ total+=i.price*i.qty;
 
 let text=
 "Новый заказ\n\n"+
-"Телефон: "+phone+"\n\n"+
-"Адрес: "+address+"\n\n"+
+"Имя: "+name+"\n"+
+"Телефон: "+phone+"\n"+
+"Адрес: "+address+"\n"+
+"Оплата: "+payment+"\n\n"+
 items+
 "\nИтого: "+total+" R$";
 
 let url="https://t.me/F3FOOD?text="+encodeURIComponent(text);
 
-if(tg && tg.openTelegramLink){
-tg.openTelegramLink(url);
-}else{
 window.open(url,"_blank");
-}
 
 }
 
