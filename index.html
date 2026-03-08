@@ -159,11 +159,16 @@ background:#25D366;
 .sauce-title{
 background:#ff7a00;
 color:white;
-padding:8px;
+padding:10px;
 border-radius:8px;
 text-align:center;
 font-weight:700;
 margin-top:10px;
+cursor:pointer;
+}
+
+.sauce-list{
+display:none;
 }
 
 .mustard{
@@ -224,11 +229,13 @@ color:black;
 
 <button onclick="addToCart(event,'Холодец',75)">Добавить</button>
 
-<div class="sauce-title">Соусы</div>
+<div class="sauce-title" onclick="toggleSauce('sauce1')">Соусы</div>
 
+<div id="sauce1" class="sauce-list">
 <button class="mustard" onclick="addToCart(event,'Русская горчица',15)">
 Русская горчица • 15 R$
 </button>
+</div>
 
 </div>
 
@@ -278,11 +285,13 @@ color:black;
 
 <button onclick="addToCart(event,'Буженина',40)">Добавить</button>
 
-<div class="sauce-title">Соусы</div>
+<div class="sauce-title" onclick="toggleSauce('sauce2')">Соусы</div>
 
+<div id="sauce2" class="sauce-list">
 <button class="mustard" onclick="addToCart(event,'Русская горчица',15)">
 Русская горчица • 15 R$
 </button>
+</div>
 
 </div>
 
@@ -316,7 +325,9 @@ color:black;
 
 <button onclick="addToCart(event,'Шашлык',60)">Добавить</button>
 
-<div class="sauce-title">Соусы</div>
+<div class="sauce-title" onclick="toggleSauce('sauce3')">Соусы</div>
+
+<div id="sauce3" class="sauce-list">
 
 <button class="adjika" onclick="addToCart(event,'Аджика',15)">Аджика 🌶️ • 15 R$</button>
 
@@ -325,6 +336,8 @@ color:black;
 <button class="bbq" onclick="addToCart(event,'BBQ',5)">BBQ • 5 R$</button>
 
 <button class="tartar" onclick="addToCart(event,'Тартар',10)">Тартар • 10 R$</button>
+
+</div>
 
 </div>
 
@@ -341,36 +354,6 @@ color:black;
 <p class="price">90 R$</p>
 
 <button onclick="addToCart(event,'Пирожки',90)">Добавить</button>
-
-</div>
-
-</div>
-
-<!-- ФУРШЕТ -->
-
-<div id="buffet" class="menu">
-
-<div class="product">
-
-<img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_0654.jpeg">
-
-<h3>КЕЙТЕРИНГ</h3>
-
-<p class="description">Мы с радостью приготовим для вас:</p>
-
-<ul class="catering-list">
-<li>семейные праздники</li>
-<li>дни рождения</li>
-<li>камерные ужины</li>
-<li>корпоративные мероприятия</li>
-<li>выездной кейтеринг</li>
-</ul>
-
-<p class="price">WhatsApp: +55 48 98871-2207</p>
-
-<button class="whatsapp-btn" onclick="window.open('https://wa.me/5548988712207','_blank')">
-Написать в WhatsApp
-</button>
 
 </div>
 
@@ -402,6 +385,18 @@ color:black;
 
 let cart=[];
 const MIN_ORDER=150;
+
+function toggleSauce(id){
+
+let el=document.getElementById(id);
+
+if(el.style.display==="block"){
+el.style.display="none";
+}else{
+el.style.display="block";
+}
+
+}
 
 function switchMenu(menu,btn){
 
