@@ -143,6 +143,51 @@ font-weight:700;
 color:#444;
 }
 
+.catering-list{
+margin-top:8px;
+padding-left:18px;
+color:#444;
+font-size:14px;
+}
+
+.whatsapp-btn{
+background:#25D366;
+}
+
+/* СОУСЫ */
+
+.sauce-title{
+background:#ff7a00;
+color:white;
+padding:8px;
+border-radius:8px;
+text-align:center;
+font-weight:700;
+margin-top:10px;
+}
+
+.mustard{
+background:#ffd84d;
+color:black;
+}
+
+.adjika{
+background:#7a0000;
+}
+
+.ketchup{
+background:#ff8c8c;
+}
+
+.bbq{
+background:#5a0000;
+}
+
+.tartar{
+background:#f1e3c4;
+color:black;
+}
+
 </style>
 
 </head>
@@ -165,55 +210,143 @@ color:#444;
 
 <div id="home" class="menu active">
 
+<!-- ХОЛОДЕЦ -->
+
 <div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_8516.webp">
+
 <h3>Холодец три мяса</h3>
+
 <p class="description">Говядина, свинина, курица • 500 г</p>
+
 <p class="price">75 R$</p>
+
 <button onclick="addToCart(event,'Холодец',75)">Добавить</button>
+
+<div class="sauce-title">Соусы</div>
+
+<button class="mustard" onclick="addToCart(event,'Русская горчица',15)">
+Русская горчица • 15 R$
+</button>
+
 </div>
 
+<!-- ОЛИВЬЕ -->
+
 <div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/412B2F56-0B79-4E41-8AF1-207DD9218157.png">
-<h3>Оливье (мясной)</h3>
+
+<h3>Салат «Оливье»</h3>
+
 <p class="description">Классический салат с говядиной • 500 г</p>
+
 <p class="price">55 R$</p>
+
 <button onclick="addToCart(event,'Оливье',55)">Добавить</button>
+
 </div>
 
+<!-- САЛАТ КАЛЬМАР -->
+
 <div class="product">
+
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/1786510D-307E-465E-B442-C4F73382BC73.png">
+
+<h3>Салат с кальмаром</h3>
+
+<p class="description">Кальмар, красный лук, огурец, яйца • 500 г</p>
+
+<p class="price">50 R$</p>
+
+<button onclick="addToCart(event,'Салат с кальмаром',50)">Добавить</button>
+
+</div>
+
+<!-- БУЖЕНИНА -->
+
+<div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
+
 <h3>Буженина</h3>
+
 <p class="description">Свинина • 300 г</p>
+
 <p class="price">40 R$</p>
+
 <button onclick="addToCart(event,'Буженина',40)">Добавить</button>
+
+<div class="sauce-title">Соусы</div>
+
+<button class="mustard" onclick="addToCart(event,'Русская горчица',15)">
+Русская горчица • 15 R$
+</button>
+
 </div>
 
+<!-- ЛОСОСЬ -->
+
 <div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
+
 <h3>Лосось с/с</h3>
+
 <p class="description">Лосось слабосоленый • 300 г</p>
+
 <p class="price">75 R$</p>
+
 <button onclick="addToCart(event,'Лосось',75)">Добавить</button>
+
 </div>
 
+<!-- ШАШЛЫК -->
+
 <div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
+
 <h3>Шашлык</h3>
+
 <p class="description">Свинина • 250 г</p>
+
 <p class="price">60 R$</p>
+
 <button onclick="addToCart(event,'Шашлык',60)">Добавить</button>
+
+<div class="sauce-title">Соусы</div>
+
+<button class="adjika" onclick="addToCart(event,'Аджика',15)">Аджика 🌶️ • 15 R$</button>
+
+<button class="ketchup" onclick="addToCart(event,'Кетчуп',5)">Кетчуп • 5 R$</button>
+
+<button class="bbq" onclick="addToCart(event,'BBQ',5)">BBQ • 5 R$</button>
+
+<button class="tartar" onclick="addToCart(event,'Тартар',10)">Тартар • 10 R$</button>
+
 </div>
+
+<!-- ПИРОЖКИ -->
 
 <div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
+
 <h3>Пирожки</h3>
+
 <p class="description">Капуста • 10 шт</p>
+
 <p class="price">90 R$</p>
+
 <button onclick="addToCart(event,'Пирожки',90)">Добавить</button>
+
 </div>
 
 </div>
+
+<!-- ФУРШЕТ -->
 
 <div id="buffet" class="menu">
 
@@ -249,7 +382,7 @@ color:#444;
 <button onclick="sendOrder()">Сделать заказ</button>
 
 <div class="minimum">
-Минимальный заказ от 150 реал
+Минимальный заказ от 150 R$
 </div>
 
 </div>
@@ -261,10 +394,10 @@ const MIN_ORDER=150;
 
 function switchMenu(menu,btn){
 
-document.querySelectorAll('.menu').forEach(m=>{m.classList.remove('active');});
+document.querySelectorAll('.menu').forEach(m=>m.classList.remove('active'));
 document.getElementById(menu).classList.add('active');
 
-document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');});
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 btn.classList.add('active');
 
 }
@@ -274,7 +407,7 @@ function addToCart(event,name,price){
 let product=event.target.closest('.product');
 product.classList.add("added");
 
-setTimeout(()=>{product.classList.remove("added");},300);
+setTimeout(()=>product.classList.remove("added"),300);
 
 let existing=cart.find(i=>i.name===name);
 
@@ -329,7 +462,7 @@ document.getElementById("total").innerText=total;
 function sendOrder(){
 
 let total=0;
-cart.forEach(i=>{total+=i.price*i.qty;});
+cart.forEach(i=>total+=i.price*i.qty);
 
 if(total<MIN_ORDER){
 alert("Минимальный заказ 150 R$");
