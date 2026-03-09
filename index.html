@@ -199,8 +199,6 @@ background:#f1e3c4;
 color:black;
 }
 
-/* выбор веса */
-
 .option{
 display:flex;
 justify-content:space-between;
@@ -259,7 +257,6 @@ font-weight:700;
 <div id="sauce1" class="sauce-list">
 <button class="mustard" onclick="addToCart(event,'Русская горчица',5)">Русская горчица • 5 R$</button>
 </div>
-
 </div>
 
 <div class="product">
@@ -279,9 +276,7 @@ font-weight:700;
 </div>
 
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
-
 <h3>Буженина</h3>
 <p class="description">Свинина</p>
 
@@ -313,16 +308,48 @@ font-weight:700;
 
 </div>
 
+<div class="product">
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/0F4A5B09-9721-47C9-9298-EF8656A2669D.png">
+<h3>Лосось с/с</h3>
+<p class="description">Лосось слабосоленый • 300 г</p>
+<p class="price">75 R$</p>
+<button onclick="addToCart(event,'Лосось',75)">Добавить</button>
+</div>
+
+<div class="product">
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/F7DADF7E-364E-463B-9F34-85EE82689F5E.jpeg">
+<h3>Шашлык</h3>
+<p class="description">Свинина • 250 г</p>
+<p class="price">60 R$</p>
+<button onclick="addToCart(event,'Шашлык',60)">Добавить</button>
+
+<div class="sauce-title" onclick="toggleSauce('sauce3','arrow3')">
+Соусы <span id="arrow3" class="arrow">↓</span>
+</div>
+
+<div id="sauce3" class="sauce-list">
+<button class="adjika" onclick="addToCart(event,'Аджика',15)">Аджика 🌶️ • 15 R$</button>
+<button class="ketchup" onclick="addToCart(event,'Кетчуп',5)">Кетчуп • 5 R$</button>
+<button class="bbq" onclick="addToCart(event,'BBQ',5)">BBQ • 5 R$</button>
+<button class="tartar" onclick="addToCart(event,'Тартар',10)">Тартар • 10 R$</button>
+</div>
+
+</div>
+
+<div class="product">
+<img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
+<h3>Пирожки</h3>
+<p class="description">Капуста • 10 шт</p>
+<p class="price">90 R$</p>
+<button onclick="addToCart(event,'Пирожки',90)">Добавить</button>
+</div>
+
 </div>
 
 <div id="buffet" class="menu">
-
 <div class="product">
-
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/IMG_0654.jpeg">
-
 <h3>КЕЙТЕРИНГ</h3>
-
 <p class="description">Мы с радостью приготовим для вас:</p>
 
 <ul class="catering-list">
@@ -340,7 +367,6 @@ font-weight:700;
 </button>
 
 </div>
-
 </div>
 
 <div class="cart">
