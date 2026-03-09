@@ -199,6 +199,14 @@ background:#f1e3c4;
 color:black;
 }
 
+.option{
+display:flex;
+align-items:center;
+gap:8px;
+margin-bottom:6px;
+font-size:14px;
+}
+
 </style>
 
 </head>
@@ -235,7 +243,6 @@ color:black;
 <div id="sauce1" class="sauce-list">
 <button class="mustard" onclick="addToCart(event,'Русская горчица',5)">Русская горчица • 5 R$</button>
 </div>
-
 </div>
 
 <div class="product">
@@ -255,11 +262,23 @@ color:black;
 </div>
 
 <div class="product">
+
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/EB0321F8-F6EB-4AD5-BAF0-617B03F5FA98.png">
+
 <h3>Буженина</h3>
-<p class="description">Свинина • 300 г</p>
-<p class="price">40 R$</p>
-<button onclick="addToCart(event,'Буженина',40)">Добавить</button>
+<p class="description">Свинина</p>
+
+<label class="option">
+<input type="radio" name="buzhenina" value="35" data-name="Буженина 250г">
+250 г • 35 R$
+</label>
+
+<label class="option">
+<input type="radio" name="buzhenina" value="80" data-name="Буженина 600г">
+600 г • 80 R$
+</label>
+
+<button onclick="addBuzhenina(event)">Добавить</button>
 
 <div class="sauce-title" onclick="toggleSauce('sauce2','arrow2')">
 Соусы <span id="arrow2" class="arrow">↓</span>
@@ -386,6 +405,22 @@ document.getElementById(menu).classList.add('active');
 
 document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
 btn.classList.add('active');
+
+}
+
+function addBuzhenina(event){
+
+let selected=document.querySelector('input[name="buzhenina"]:checked');
+
+if(!selected){
+alert("Выберите вес");
+return;
+}
+
+let price=parseInt(selected.value);
+let name=selected.dataset.name;
+
+addToCart(event,name,price);
 
 }
 
