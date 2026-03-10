@@ -210,11 +210,33 @@ font-size:15px;
 .option-left{
 display:flex;
 align-items:center;
-gap:10px;
+gap:8px;
 }
 
-.option input{
-transform:scale(1.2);
+/* ЭСТЕТИЧНЫЕ МАЛЕНЬКИЕ ГАЛОЧКИ */
+
+.option input[type="checkbox"]{
+appearance:none;
+width:16px;
+height:16px;
+border:2px solid #ccc;
+border-radius:4px;
+cursor:pointer;
+position:relative;
+}
+
+.option input[type="checkbox"]:checked{
+background:#ff7a00;
+border-color:#ff7a00;
+}
+
+.option input[type="checkbox"]:checked::after{
+content:"✓";
+color:white;
+font-size:12px;
+position:absolute;
+top:-2px;
+left:2px;
 }
 
 .option-price{
