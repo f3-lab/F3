@@ -382,6 +382,7 @@ font-weight:700;
 
 </div>
 
+<!-- ПИРОГ -->
 <div class="product">
 
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/87851FB7-4A56-4DB2-9A3B-5FF2071C8317.png">
@@ -411,7 +412,7 @@ font-weight:700;
 
 </div>
 
-
+<!-- ПИРОЖКИ -->
 <div class="product">
 
 <img src="https://raw.githubusercontent.com/f3-lab/F3/main/9C57B210-0B3B-4ADF-B28F-FDD8BE0255E0.png">
@@ -439,7 +440,80 @@ font-weight:700;
 <button id="pirozhkiBtn" onclick="addPirozhki(event)">
 Добавить (мин. 10 шт)
 </button>
+
 </div>
+
+<script>
+
+// ПИРОГ
+function selectPirog(el){
+
+document.querySelectorAll('input[name="pirog"]').forEach(i=>{
+if(i!==el)i.checked=false;
+});
+
+let btn=document.getElementById("pirogBtn");
+
+if(el.checked){
+btn.innerText="Добавить • "+el.value+" R$";
+}else{
+btn.innerText="Добавить";
+}
+
+}
+
+function addPirog(event){
+
+let selected=document.querySelector('input[name="pirog"]:checked');
+
+if(!selected){
+alert("Выберите начинку");
+return;
+}
+
+let price=parseInt(selected.value);
+let name=selected.dataset.name;
+
+addToCart(event,name,price);
+
+}
+
+
+// ПИРОЖКИ
+function selectPirozhki(el){
+
+document.querySelectorAll('input[name="pirozhki"]').forEach(i=>{
+if(i!==el)i.checked=false;
+});
+
+let btn=document.getElementById("pirozhkiBtn");
+
+if(el.checked){
+btn.innerText="Добавить • "+el.value+" R$ / шт";
+}else{
+btn.innerText="Добавить (мин. 10 шт)";
+}
+
+}
+
+function addPirozhki(event){
+
+let selected=document.querySelector('input[name="pirozhki"]:checked');
+
+if(!selected){
+alert("Выберите начинку");
+return;
+}
+
+let price=parseInt(selected.value);
+let name=selected.dataset.name + " (10 шт)";
+
+// умножаем на минималку 10 шт
+addToCart(event,name,price*10);
+
+}
+
+</script>
 
 </div>
 
