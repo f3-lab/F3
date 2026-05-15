@@ -1075,6 +1075,12 @@ addToCart(event,name,price*10);
 <input id="name" placeholder="Имя">
 <input id="phone" placeholder="Телефон">
 <input id="address" placeholder="Адрес доставки">
+    
+<input id="promo" placeholder="Промокод">
+
+<button onclick="applyPromo()">
+Применить промокод
+</button>
 
 <button onclick="sendOrder()">Сделать заказ</button>
 
@@ -1120,6 +1126,11 @@ addToCart(event,name,price);
 
 let cart=[];
 const MIN_ORDER=150;
+
+const PROMO_CODE="PADEL10";
+const PROMO_DISCOUNT=10;
+
+let promoApplied=false;
 
 function toggleSauce(id,arrowId){
 
@@ -1229,6 +1240,22 @@ renderCart();
 
 }
 
+function applyPromo(){
+
+let promo=document.getElementById("promo").value.trim().toUpperCase();
+
+if(promo===PROMO_CODE){
+promoApplied=true;
+alert("Промокод применен! Скидка 10%");
+}else{
+promoApplied=false;
+alert("Неверный промокод");
+}
+
+renderCart();
+
+}
+
 function renderCart(){
 
 let cartDiv=document.getElementById("cart");
@@ -1263,7 +1290,13 @@ ${item.name} x${item.qty} = ${item.price*item.qty} R$
 
 });
 
-document.getElementById("total").innerText=total;
+let finalTotal=total;
+
+if(promoApplied){
+finalTotal=Math.round(total*0.9);
+}
+
+document.getElementById("total").innerText=finalTotal;
 
 }
 
@@ -1271,6 +1304,10 @@ function sendOrder(){
 
 let total=0;
 cart.forEach(i=>total+=i.price*i.qty);
+
+if(promoApplied){
+total=Math.round(total*0.9);
+}
 
 if(total<MIN_ORDER){
 alert("Минимальный заказ 150 R$");
@@ -1291,13 +1328,18 @@ cart.forEach(i=>{
 items+=i.name+" x"+i.qty+" = "+(i.price*i.qty)+" R$\n";
 });
 
+let promoText=promoApplied
+? "\nПромокод: "+PROMO_CODE+" (-10%)"
+: "";
+
 let text=
 "Новый заказ\n\n"+
 "Имя: "+name+"\n"+
 "Телефон: "+phone+"\n"+
 "Адрес: "+address+"\n\n"+
 items+
-"\nИтого: "+total+" R$";
+promoText+
+"\n\nИтого: "+total+" R$";
 
 let url="https://t.me/F3FOOD?text="+encodeURIComponent(text);
 
