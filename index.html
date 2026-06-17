@@ -275,8 +275,43 @@ font-weight:700;
 </div>
 
 <div id="sauce1" class="sauce-list">
-<button class="mustard" onclick="addToCart(event,'Русская горчица',10)">Русская горчица • 10 R$</button>
+<button style="background:#f1f1f1;color:black;" onclick="addToCart(event,'Хрен',10)">
+Хрен • 10 R$
+</button>
+
+<button class="mustard" onclick="addToCart(event,'Русская горчица',10)">
+Русская горчица • 10 R$
+</button>
 </div>
+</div>
+
+<div class="product">
+
+<img src="https://github.com/f3-lab/F3/blob/main/ED931D67-61D5-4D08-9F42-BB8E82C354C8.png?raw=true">
+
+<h3>Холодец говядина</h3>
+<p class="description">Отборная говядина • 700 г</p>
+
+<p class="price">120 R$</p>
+
+<button onclick="addToCart(event,'Холодец говядина',120)">
+Добавить
+</button>
+
+<div class="sauce-title" onclick="toggleSauce('sauceBeefHolodets','arrowBeefHolodets')">
+Соусы <span id="arrowBeefHolodets" class="arrow">↓</span>
+</div>
+
+<div id="sauceBeefHolodets" class="sauce-list">
+<button style="background:#f1f1f1;color:black;" onclick="addToCart(event,'Хрен',10)">
+Хрен • 10 R$
+</button>
+
+<button class="mustard" onclick="addToCart(event,'Русская горчица',10)">
+Русская горчица • 10 R$
+</button>
+</div>
+
 </div>
 
 <div class="product">
