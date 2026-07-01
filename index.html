@@ -891,7 +891,7 @@ font-weight:700;
 
 <h3>Синнабоны</h3>
 
-<p class="description">Минимальный заказ от 4 шт</p>
+<p class="description">Минимальный заказ от 6 шт</p>
 
 <label class="option">
 <div class="option-left">
@@ -910,7 +910,7 @@ font-weight:700;
 </label>
 
 <button id="cinnabonBtn" onclick="addCinnabon(event)">
-Добавить (мин. 4 шт)
+Добавить (мин. 6 шт)
 </button>
 
 </div>
@@ -1117,7 +1117,7 @@ let btn=document.getElementById("cinnabonBtn");
 if(el.checked){
 btn.innerText="Добавить • "+el.value+" R$ / шт";
 }else{
-btn.innerText="Добавить (мин. 4 шт)";
+btn.innerText="Добавить (мин. 6 шт)";
 }
 
 }
@@ -1132,9 +1132,9 @@ return;
 }
 
 let price=parseInt(selected.value);
-let name=selected.dataset.name + " (4 шт)";
+let name=selected.dataset.name + " (6 шт)";
 
-addToCart(event,name,price*4);
+addToCart(event,name,price*6);
 
 }
 
