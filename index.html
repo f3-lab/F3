@@ -753,7 +753,7 @@ font-weight:700;
 
 <h3>Хачапури</h3>
 
-<p class="description">Домашнее хачапури с сыром</p>
+<p class="description">Хачапури с миксом сыров</p>
 
 <label class="option">
 <div class="option-left">
@@ -1058,6 +1058,38 @@ font-weight:700;
 </div>
 
 <script>
+
+function selectKhachapuri(el){
+
+document.querySelectorAll('input[name="khachapuri"]').forEach(i=>{
+if(i!==el)i.checked=false;
+});
+
+let btn=document.getElementById("khachapuriBtn");
+
+if(el.checked){
+btn.innerText="Добавить • "+el.value+" R$";
+}else{
+btn.innerText="Добавить";
+}
+
+}
+
+function addKhachapuri(event){
+
+let selected=document.querySelector('input[name="khachapuri"]:checked');
+
+if(!selected){
+alert("Выберите размер");
+return;
+}
+
+let price=parseInt(selected.value);
+let name=selected.dataset.name;
+
+addToCart(event,name,price);
+
+}
 
 function selectShuba(el){
 
