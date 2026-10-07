@@ -442,41 +442,6 @@ font-weight:700;
 ❄️ НОВИНКА
 </div>
 
-<img src="https://github.com/f3-lab/F3/blob/main/C1DC0869-BCD7-4767-BE04-12DDC479CDEE.png?raw=true">
-
-<h3>Пельмени</h3>
-
-<p class="description">
-</p>
-
-<select id="selectPelmeni" onchange="updatePelmeniPrice()">
-<option value="50">«Детские» (цыплёнок) — 400 г — 50 R$</option>
-<option value="100">«Детские» (цыплёнок) — 800 г — 100 R$</option>
-<option value="60">«Премиум» (говядина) — 400 г — 60 R$</option>
-<option value="120">«Премиум» (говядина) — 800 г — 120 R$</option>
-<option value="60">«Классические» (говядина/свинина) — 400 г — 60 R$</option>
-<option value="120">«Классические» (говядина/свинина) — 800 г — 120 R$</option>
-</select>
-
-<select id="saucePelmeni">
-<option value="0">Без соуса</option>
-<option value="15">Сметана — 15 R$</option>
-</select>
-
-<p class="price" id="pelmeniPrice">50 R$</p>
-
-<button onclick="addPelmeni(event)">
-Добавить
-</button>
-
-</div>
-
-<div class="product">
-
-<div style="background:#ff7a00;color:white;padding:6px 10px;border-radius:8px;font-size:12px;font-weight:700;display:inline-block;margin-bottom:8px;">
-❄️ НОВИНКА
-</div>
-
 <img src="https://github.com/f3-lab/F3/blob/main/20B49074-B597-4C7B-B49C-6897712DA4E3.png?raw=true">
 
 <h3>Котлеты из цыплёнка</h3>
@@ -1117,32 +1082,6 @@ font-weight:700;
 </div>
 
 <script>
-
-<script>
-function updatePelmeniPrice() {
-    const pelmeni = document.getElementById('selectPelmeni');
-    document.getElementById('pelmeniPrice').textContent =
-        pelmeni.value + ' R$';
-}
-
-function addPelmeni(event) {
-    const pelmeni = document.getElementById('selectPelmeni');
-    const sauce = document.getElementById('saucePelmeni');
-
-    const pelmeniName = pelmeni.options[pelmeni.selectedIndex].text;
-    const pelmeniPrice = Number(pelmeni.value);
-    const saucePrice = Number(sauce.value);
-
-    const sauceName = saucePrice > 0 ? ' + Сметана' : '';
-    const totalPrice = pelmeniPrice + saucePrice;
-
-    addToCart(
-        event,
-        'Пельмени ' + pelmeniName + sauceName,
-        totalPrice
-    );
-}
-</script>
 
 function selectKhachapuri(el){
 
