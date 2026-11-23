@@ -1896,5 +1896,33 @@ window.open(url,"_blank");
 
 </script>
 
+<script>
+document.querySelectorAll('img').forEach(img => {
+  const url = img.getAttribute('src');
+  if (!url) return;
+
+  try {
+    const parsed = new URL(url, location.href);
+    const allowed = [
+      'github.com',
+      'raw.githubusercontent.com'
+    ];
+
+    if (!allowed.includes(parsed.hostname)) return;
+
+    const filename = decodeURIComponent(
+      parsed.pathname.split('/').pop()
+    );
+
+    if (!filename) return;
+
+    img.src = './' + encodeURIComponent(filename);
+  } catch (error) {
+    console.warn('Ошибка ссылки изображения:', url);
+  }
+});
+</script>
+
+
 </body>
 </html>
