@@ -374,6 +374,45 @@ font-weight:700;
 </div>
 
 <div class="product">
+  <div style="background:#1e8449;color:white;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:500;line-height:1.3;display:inline-block;margin-bottom:6px;">
+    🎄 Новогодняя новинка
+  </div>
+
+  <img
+    src="https://raw.githubusercontent.com/f3-lab/F3/main/05CE492C-CB03-411B-A7A6-AD0987D340D6.png"
+    alt="Салат «Крабовый»"
+  >
+
+  <h3>Салат «Крабовый»</h3>
+  <p class="description">Традиционный салат • 500 г</p>
+
+  <label class="option">
+    <span class="option-left">
+      <input type="radio" name="crab-salad" value="50"
+             data-name="Салат «Крабовый» с рисом 500 г" checked>
+      <span>С рисом</span>
+    </span>
+    <span class="option-price">50 R$</span>
+  </label>
+
+  <label class="option">
+    <span class="option-left">
+      <input type="radio" name="crab-salad" value="55"
+             data-name="Салат «Крабовый» без риса 500 г">
+      <span>Без риса</span>
+    </span>
+    <span class="option-price">55 R$</span>
+  </label>
+
+  <button type="button" onclick="
+    const selected = this.closest('.product').querySelector('input[name=crab-salad]:checked');
+    addToCart(event, selected.dataset.name, Number(selected.value));
+  ">
+    Добавить
+  </button>
+</div>
+
+<div class="product">
 <div style="background:#1e8449;color:white;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:500;line-height:1.3;display:inline-block;margin-bottom:6px;">
   🎄 Новогодняя новинка
 </div>
