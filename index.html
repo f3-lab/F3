@@ -388,8 +388,9 @@ font-weight:700;
 
   <label class="option">
     <span class="option-left">
-      <input type="radio" name="crab-salad" value="50"
-             data-name="Салат «Крабовый» с рисом 500 г" checked>
+      <input type="checkbox" name="crab-salad" value="50"
+             data-name="Салат «Крабовый» с рисом 500 г"
+             onchange="selectCrabSalad(this)">
       <span>С рисом</span>
     </span>
     <span class="option-price">50 R$</span>
@@ -397,17 +398,15 @@ font-weight:700;
 
   <label class="option">
     <span class="option-left">
-      <input type="radio" name="crab-salad" value="55"
-             data-name="Салат «Крабовый» без риса 500 г">
+      <input type="checkbox" name="crab-salad" value="55"
+             data-name="Салат «Крабовый» без риса 500 г"
+             onchange="selectCrabSalad(this)">
       <span>Без риса</span>
     </span>
     <span class="option-price">55 R$</span>
   </label>
 
-  <button type="button" onclick="
-    const selected = this.closest('.product').querySelector('input[name=crab-salad]:checked');
-    addToCart(event, selected.dataset.name, Number(selected.value));
-  ">
+  <button type="button" onclick="addCrabSalad(event)">
     Добавить
   </button>
 </div>
@@ -1211,6 +1210,30 @@ font-weight:700;
 </div>
 
 <script>
+
+<script>
+function selectCrabSalad(option) {
+  const card = option.closest('.product');
+
+  for (const otherOption of card.querySelectorAll('input[name="crab-salad"]')) {
+    if (otherOption !== option) {
+      otherOption.checked = false;
+    }
+  }
+}
+
+function addCrabSalad(event) {
+  const card = event.currentTarget.closest('.product');
+  const selected = card.querySelector('input[name="crab-salad"]:checked');
+
+  if (!selected) {
+    alert('Выберите вариант салата');
+    return;
+  }
+
+  addToCart(event, selected.dataset.name, Number(selected.value));
+}
+</script>
 
 function selectKhachapuri(el){
 
